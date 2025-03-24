@@ -1,57 +1,37 @@
-import { User } from './../models/user.models';
-//import { user } from "../interface/user.interface"
+import { User } from "./../models/user.models";
+import bcrypt from "bcryptjs";
 
-export const createAcc = async (data : any) => {
-    try {
-        const {profilePhoto, lastName, firstName, phoneNumber, emailAddress, password, termsCondition}  =  data;
-        console.log(data);
-        
-        const userExit = await User.findOne({emailAddress});
-
-        if(userExit)
-        {
-            return {message : "User already exit...please signin"}
-        }
-        console.log(data);
-        const newUser = new User ({
-            profilePhoto,
-            lastName,
-            firstName,
-            phoneNumber,
-            emailAddress,
-            password,
-            termsCondition
-        })
-        console.log(newUser);
-        
-        const saveUser = await newUser.save();
-        
-        return {message : "Account created successfully", saveUser};
-
-    } catch (error) {
-        return {message : "Faild to create user"};
+export const createUser = async (data: any) => {
+  try {
+    const {
+      profilePhoto,
+      lastName,
+      firstName,
+      phoneNumber,
+      emailAddress,
+      password,
+      termsCondition,
+    } = data;
+    
+    const userExit = await User.findOne({ emailAddress });
+    if (userExit) {
+      return false;
     }
-}
 
-export const logIn = async (data : any) => {
-    try {
-        const {emailAddress, password} = data;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      profilePhoto,
+      lastName,
+      firstName,
+      phoneNumber,
+      emailAddress,
+      password: hashedPassword,
+      termsCondition,
+    });
 
-        const userExit = await User.findOne({emailAddress});
-
-        if(!userExit)
-        {
-            return {message : "invalid credentials"}
-        }
-
-        if(userExit.password === password)
-        {
-            return {message : "Login Successful"}
-        }else{
-            return {message : "invalid credintials"}
-        }
-
-    } catch (error) {
-        return {message : "Faild to login"};
-    }
-}
+    const saveUser = await newUser.save();
+    return true;
+  } catch (error) {
+    return { message: "Faild to create user" };
+  }
+};

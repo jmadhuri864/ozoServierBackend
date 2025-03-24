@@ -6,13 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Booking = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const bookingSchema = new mongoose_1.default.Schema({
-    User: {
+    userId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    service: {
+    serviceId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Service'
+        ref: 'Service',
+        required: true
     },
     time: {
         type: String,
@@ -25,7 +27,8 @@ const bookingSchema = new mongoose_1.default.Schema({
     status: {
         type: String,
         enum: ['Pending', 'Processing', 'Delivery'],
-        required: true
+        required: true,
+        default: 'Pending'
     }
 });
 exports.Booking = mongoose_1.default.model('Booking', bookingSchema);

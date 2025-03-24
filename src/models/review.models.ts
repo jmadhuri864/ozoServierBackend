@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import { review } from "../interface/review.interface";
+import { IReview } from "../interface/review.interface";
 
-const reviewSchema = new mongoose.Schema<review>(
+const reviewSchema = new mongoose.Schema<IReview>(
     {
-        user : {
+        userId : {
             type : mongoose.Schema.Types.ObjectId,
             required : true
         },
-        service : {
+        serviceId : {
             type : mongoose.Schema.Types.ObjectId,
             required : true
         },
@@ -23,4 +23,4 @@ const reviewSchema = new mongoose.Schema<review>(
     }
 )
 
-export const Review = mongoose.model<review>('Review', reviewSchema);
+export const Review = mongoose.model<IReview>('Review', reviewSchema);

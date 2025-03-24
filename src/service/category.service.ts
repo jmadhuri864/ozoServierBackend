@@ -1,32 +1,31 @@
+import { CategoryDto } from '../dto/category.dto';
+import { TitleDto } from '../dto/title.dto';
+import { ITitle } from '../interface/title.interface';
 import { Category } from '../models/category.models';
-import { category } from './../interface/category.interface';
-import { title } from './../interface/title.interface';
 import { Title } from './../models/title.models';
-export const createCategory = async (data : any) => {
+export const createCategory = async (data : CategoryDto) => {
  try {
-    const {name, title} = data;
-    //console.log(data);
-
-    const titleExists = await Title.findOne({name : title});
-    const categoryExists = await Category.findOne({name});
-    
+    //const name = data.name;
+    const titleExists = await Title.findOne({name : data.title});
+    const categoryExists = await Category.findOne({name : data.name});
     
     if(!titleExists && categoryExists)
     {
-            return {message : "Insert new category"};
+            return false;
     }
 
-   
-
+    if (!titleExists) {
+      console.log("Title not found");
+      return false;
+    }
+    const titleId = titleExists._id;
     const newCategory = new Category({
-        name,
-        title
+        name : data.name,
+        title : titleId
     })
-    //console.log(newCategory);
-
+    
     const saveCategory = await newCategory.save();
-    return {message : "Category Save Successfully", saveCategory}
-
+    return true;
  } catch (error) {
     return {message : "Failed to create category"}
  }   

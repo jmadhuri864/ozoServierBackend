@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-export interface booking {
-    User : mongoose.Types.ObjectId;
-    service : mongoose.Types.ObjectId;
+export interface IBooking {
+    userId : mongoose.Types.ObjectId;
+    serviceId : mongoose.Types.ObjectId;
     time : string;
     date : Date;
     status : string;

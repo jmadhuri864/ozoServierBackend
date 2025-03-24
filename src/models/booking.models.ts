@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
-import { booking } from "../interface/booking.interface";
+import { IBooking } from "../interface/booking.interface";
 
-const bookingSchema = new mongoose.Schema<booking>({
-    User : {
+const bookingSchema = new mongoose.Schema<IBooking>({
+    userId : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'User'
+        ref : 'User',
+        required : true
     },
-    service : {
+    serviceId : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Service'
+        ref : 'Service',
+        required : true
     },
     time : {
         type : String,
@@ -21,8 +23,9 @@ const bookingSchema = new mongoose.Schema<booking>({
     status : {
         type : String,
         enum : ['Pending', 'Processing', 'Delivery'],
-        required : true
+        required : true,
+        default : 'Pending'
     }
 })
 
-export const Booking = mongoose.model<booking>('Booking', bookingSchema);
+export const Booking = mongoose.model<IBooking>('Booking', bookingSchema);

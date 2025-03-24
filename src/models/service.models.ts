@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { service } from "../interface/service.interface";
+import { IService } from "../interface/service.interface";
 
-const serviceSchema = new mongoose.Schema<service>(
+const serviceSchema = new mongoose.Schema<IService>(
     {
         userId : {
             type: mongoose.Schema.Types.ObjectId,
@@ -25,14 +25,16 @@ const serviceSchema = new mongoose.Schema<service>(
         pricePer : {
             type: String,
             enum: ['Per Hour', 'Per Day', 'Fix Rate'],
+            default : 'Per Hour'
         },
         availability : {
             type : String,
-            enum : ['Morning : 9 To 12 ', 'Afternoon : 2 To 4', 'Evening : 4 To 6']
+            enum : ['Morning : 9 To 12', 'Afternoon : 2 To 4', 'Evening : 4 To 6'],
+            default : 'Morning : 9 To 12'
         },
         itemPhoto : {
-            type : String,
-            required : true
+            type: [String],
+             required: true
         },
         address : {
             type : String,
@@ -42,4 +44,4 @@ const serviceSchema = new mongoose.Schema<service>(
     }
 )
 
-export const Service = mongoose.model<service>("Service", serviceSchema);
+export const Service = mongoose.model<IService>("Service", serviceSchema);

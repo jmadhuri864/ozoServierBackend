@@ -1,5 +1,5 @@
 
-export interface user extends Document {
+export interface IUser extends Document {
     profilePhoto : string;
     lastName : string;
     firstName : string;

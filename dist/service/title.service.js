@@ -1,23 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTitle = void 0;
+exports.titleService = void 0;
 const title_models_1 = require("../models/title.models");
-const createTitle = async (data) => {
+const titleService = async (data) => {
     try {
-        const { name } = data;
-        const exists = await title_models_1.Title.findOne({ name });
+        const exists = await title_models_1.Title.findOne({ name: data.name });
         if (exists) {
-            return { message: "Title already exists" };
+            return false;
         }
         const newTitle = new title_models_1.Title({
-            name
+            ...data,
         });
-        console.log(newTitle);
         const saveTitle = await newTitle.save();
-        return { message: "Title Saved", saveTitle };
+        return true;
     }
     catch (error) {
-        return { message: "Failed to create title" };
+        throw new Error("Failed to create title");
     }
 };
-exports.createTitle = createTitle;
+exports.titleService = titleService;

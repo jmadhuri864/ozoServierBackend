@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCategory = void 0;
 const category_models_1 = require("../models/category.models");
+//import { category } from './../interface/category.interface';
+//import { title } from './../interface/title.interface';
 const title_models_1 = require("./../models/title.models");
 const createCategory = async (data) => {
     try {

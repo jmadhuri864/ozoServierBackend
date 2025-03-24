@@ -28,13 +28,15 @@ const serviceSchema = new mongoose_1.default.Schema({
     pricePer: {
         type: String,
         enum: ['Per Hour', 'Per Day', 'Fix Rate'],
+        default: 'Per Hour'
     },
     availability: {
         type: String,
-        enum: ['Morning : 9 To 12 ', 'Afternoon : 2 To 4', 'Evening : 4 To 6']
+        enum: ['Morning : 9 To 12', 'Afternoon : 2 To 4', 'Evening : 4 To 6'],
+        default: 'Morning : 9 To 12'
     },
     itemPhoto: {
-        type: String,
+        type: [String],
         required: true
     },
     address: {

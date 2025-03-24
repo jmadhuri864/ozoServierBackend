@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Review = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const reviewSchema = new mongoose_1.default.Schema({
-    user: {
+    userId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         required: true
     },
-    service: {
+    serviceId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         required: true
     },

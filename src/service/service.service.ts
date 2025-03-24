@@ -1,22 +1,82 @@
+import { Category } from "./../models/category.models";
+import { ServiceDto } from "../dto/service.dto";
 import { Service } from "../models/service.models";
+import { IService } from "../interface/service.interface";
 
-export const createService = async (data : any) => {
-    try {
-        const {userId, titleId, categoryId, setPrice, pricePer, availability,itemPhoto, address} = data;
+//Todo : Post Service
+export const createService = async (data: ServiceDto) => {
+  try {
+    const categoryExit = await Category.findOne({ name: data.categoryId });
+    if (categoryExit) {
+      const serviceExit = await Service.find({ userId: data.userId });
+      const filterByCategory = serviceExit.filter(
+        (ele) => ele.categoryId && ele.categoryId.equals(categoryExit._id)
+      );
 
-        const userExit = await Service.find({userId});
-        
-        if(userExit){
-            const filterByTitle = userExit.map((ele) => {
-                return ele.titleId === titleId;
-        })
-            
-        if(filterByTitle){
-            return {message : "Title"}
-        }
-        }
+      if (filterByCategory.length > 0) {
+        return false;
+      }
 
-    } catch (error) {
-        
+      const categoryID = categoryExit._id;
+      const titleID = categoryExit.title;
+      const newService = new Service({
+        userId: data.userId,
+        titleId: titleID,
+        categoryId: categoryID,
+        setPrice: data.setPrice,
+        pricePer: data.pricePer,
+        availability: data.availability,
+        itemPhoto: data.itemPhoto,
+        address: data.address,
+      });
+      const saveService = await newService.save();
+      // console.log("New service saved:", saveService);
+      return true;
+    } else {
+      console.log("Category not found");
+      return false;
     }
-}
+  } catch (error) {
+    console.error("Error saving service:", error);
+    return { message: "Failed to create service" };
+  }
+};
+
+//Todo : Update Service
+export const updateService = async (data: ServiceDto, serviceID: any) => {
+  try {
+    const updateService = await Service.findByIdAndUpdate(serviceID, data);
+    if (!updateService) {
+      return { success: false, message: "Service not found", data: null };
+    }
+    return {
+      success: true,
+      messge: "Service update successfully",
+      data: updateService,
+    };
+  } catch (error) {
+    return { message: "Failed to update service" };
+  }
+};
+
+//Todo : Get All Service
+export const getAllService = async (): Promise<{
+  success: boolean;
+  message: string;
+  data?: IService[];
+}> => {
+  try {
+    const services = await Service.find()
+      .populate("userId", "firstName lastName emailAddress")
+      .populate("titleId", "name")
+      .populate("categoryId", "name");
+
+    return {
+      success: true,
+      message: "Services fetched successfully",
+      data: services,
+    };
+  } catch (error) {
+    return { success: false, message: "Internal Server Error" };
+  }
+};

@@ -1,4 +1,4 @@
 
-export interface title {
+export interface ITitle {
     name: string;
 }

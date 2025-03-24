@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { user } from "../interface/user.interface";
+import { IUser } from "../interface/user.interface";
 
-const userSchema = new mongoose.Schema<user>(
+const userSchema = new mongoose.Schema<IUser>(
     {
         profilePhoto : {
             type : String,
@@ -34,4 +34,4 @@ const userSchema = new mongoose.Schema<user>(
     }
 )
 
-export const User = mongoose.model<user>("User", userSchema);
+export const User = mongoose.model<IUser>("User", userSchema);

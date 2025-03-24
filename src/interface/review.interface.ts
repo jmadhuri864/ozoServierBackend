@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-export interface review {
-    user : mongoose.Types.ObjectId;
-    service : mongoose.Types.ObjectId;
+export interface IReview {
+    userId : mongoose.Types.ObjectId;
+    serviceId : mongoose.Types.ObjectId;
     rating : number;
     description : string;
 }
