@@ -1,21 +1,22 @@
 import mongoose from 'mongoose'
-import {User} from './user.model'
-import { Sale } from './sale.model'
-import { review } from '../interfaces/review.interface';
+import {userModel} from './user.model'
+import { saleModel } from './sale.model'
+import { Review } from '../interfaces/review.interface';
 
-const reviewSchema=new mongoose.Schema<review>({
-    r_id:{
-        type:Number,
-        required:true,
-        unique:true
-    },
+const reviewSchema=new mongoose.Schema<Review>({
+
     u_id:{
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true
     },
+    b_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Booking',
+        required:true
+    },
     s_id:{
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Sale',
         required:true
     },
@@ -31,4 +32,4 @@ const reviewSchema=new mongoose.Schema<review>({
     }
 });
 
-export const Review=mongoose.model<review>('Review',reviewSchema);
+export const reviewModel=mongoose.model<Review>('Review',reviewSchema);

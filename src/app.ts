@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "./routes/users.route";
 import { route } from "./routes/title.route";
+import categoryRouter from "./routes/category.route";
+import saleRouter from "./routes/sale.route";
+import { bookingRouter } from "./routes/booking.route";
 
 dotenv.config();
 const app = express();
@@ -24,3 +27,6 @@ mongoose
 
 app.use("/api/user", router);
 app.use("/api/title", route);
+app.use("/api/category",categoryRouter);
+app.use("/api/sale",saleRouter);
+app.use("/api/booking",bookingRouter);

@@ -1,9 +1,8 @@
-export interface booking{
-    b_id:Number;
-    u_id:Number;
-    s_id:Number;
-    r_id:Number;
-    date:String;
-    time:String;
-    status:String;
+import mongoose from "mongoose";
+
+export interface Booking{
+    u_id:mongoose.Types.ObjectId;
+    s_id:mongoose.Types.ObjectId;
+    bookingDataTime:Date;
+    status:string[];
 }

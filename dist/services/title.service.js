@@ -11,18 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postTitle = void 0;
 const title_model_1 = require("../models/title.model");
-const postTitle = (t_id, tName) => __awaiter(void 0, void 0, void 0, function* () {
-    const title = yield title_model_1.Title.findOne({ t_id });
-    if (!title) {
-        const newTitle = new title_model_1.Title({
-            t_id,
-            tName,
-        });
-        newTitle.save();
-        return true;
-    }
-    else {
+const postTitle = (titleInfo) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log(titleInfo);
+    const tName = titleInfo.tName;
+    console.log(tName);
+    const title = yield title_model_1.titleModel.findOne({ tName });
+    console.log(title);
+    if (title) {
         return false;
     }
+    const newTitle = new title_model_1.titleModel(Object.assign({}, titleInfo));
+    console.log(newTitle);
+    yield newTitle.save();
+    return true;
 });
 exports.postTitle = postTitle;

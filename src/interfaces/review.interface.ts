@@ -1,7 +1,9 @@
-export interface review{
-    r_id:Number;
-    u_id:Number;
-    s_id:Number;
-    description:String;
-    rating:Number;
+import mongoose from "mongoose";
+
+export interface Review{
+    u_id:mongoose.Types.ObjectId;
+    b_id:mongoose.Types.ObjectId;  
+    s_id:mongoose.Types.ObjectId;
+    description:string;
+    rating:number;
 }

@@ -12,13 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTitle = void 0;
 const title_service_1 = require("../services/title.service");
 const createTitle = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { t_id, tName } = req.body;
-    const title = yield (0, title_service_1.postTitle)(t_id, tName);
+    const titleInfo = req.body;
+    const title = yield (0, title_service_1.postTitle)(titleInfo);
     if (title) {
-        res.status(201).json({ message: 'created' });
+        res.status(201).json({ message: "created" });
     }
     else {
-        res.status(409).json({ message: `title with ${t_id} already exist` });
+        res
+            .status(409)
+            .json({ message: `title already exist` });
     }
 });
 exports.createTitle = createTitle;

@@ -13,13 +13,15 @@ exports.signin = exports.signup = void 0;
 const users_service_1 = require("../services/users.service");
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { u_id, image, firstName, lastName, mobileNo, email, password } = req.body;
-        const user = yield (0, users_service_1.registerUser)(u_id, image, firstName, lastName, mobileNo, email, password);
+        let userInfo = req.body;
+        const user = yield (0, users_service_1.registerUser)(userInfo);
         if (user) {
             res.status(200).json({ message: "user reister successfully" });
         }
         else {
-            res.status(409).json({ message: `user already exist with ${email}` });
+            res
+                .status(409)
+                .json({ message: `user already exist with ${userInfo.email}` });
         }
     }
     catch (error) {

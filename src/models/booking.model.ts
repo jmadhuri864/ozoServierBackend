@@ -1,43 +1,30 @@
 import mongoose from "mongoose";
-import { User } from "./user.model";
-import { Sale } from "./sale.model";
-import { Review } from "./review.model";
+import { userModel } from "./user.model";
+import { saleModel } from "./sale.model";
+import { reviewModel } from "./review.model";
 import { type } from "os";
-import { booking } from "../interfaces/booking.interface";
+import { Booking } from "../interfaces/booking.interface";
 
-const bookingSchema = new mongoose.Schema<booking>({
-  b_id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+const bookingSchema = new mongoose.Schema<Booking>({
+  
   u_id: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   s_id: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Sale",
     required: true,
   },
-  r_id: {
-    type: Number,
-    ref: "Review",
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: String,
+  bookingDataTime: {
+    type: Date,
     required: true,
   },
   status: {
-    type: String,
+    type: [String],
     enum: ["Confirmed", "Completed", "Declaim"],
-  },
+  }
 });
 
-export const Booking = mongoose.model<booking>("Booking", bookingSchema);
+export const bookingModel = mongoose.model<Booking>("Booking", bookingSchema);

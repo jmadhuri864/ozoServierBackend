@@ -1,14 +1,23 @@
-import { Title } from "../models/title.model";
-export const postTitle = async (t_id: Number, tName: String) => {
-  const title = await Title.findOne({ t_id });
-  if (!title) {
-    const newTitle = new Title({
-      t_id,
-      tName,
-    });
-    newTitle.save();
-    return true;
-  } else {
+import { Title } from './../interfaces/title.interface';
+import { titleModel } from "../models/title.model";
+import { CreateTitleDto } from '../dtos/title.dto';
+
+export const postTitle = async (titleInfo: CreateTitleDto) => {
+ // console.log(titleInfo);
+  const tName : string = titleInfo.tName;
+  console.log(tName);
+  
+  const title = await titleModel.findOne({tName});
+  console.log(title);
+  if (title) {
     return false;
-  }
+  } 
+
+  const newTitle = new titleModel({
+    ...titleInfo
+  });
+  console.log(newTitle);
+  await newTitle.save();
+  return true;
+
 };

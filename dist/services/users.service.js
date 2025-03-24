@@ -11,20 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.registerUser = void 0;
 const user_model_1 = require("../models/user.model");
-const registerUser = (u_id, image, firstName, lastName, mobileNo, email, password) => __awaiter(void 0, void 0, void 0, function* () {
+const registerUser = (userInfo) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_model_1.User.findOne({ email });
+        const user = yield user_model_1.userModel.findOne({ email: userInfo.email });
         console.log(user);
         if (!user) {
-            const newUser = new user_model_1.User({
-                u_id,
-                firstName,
-                lastName,
-                image,
-                mobileNo,
-                email,
-                password,
-            });
+            const newUser = new user_model_1.userModel({ userInfo });
             const savedUser = yield newUser.save();
             console.log(savedUser);
             return true;
@@ -39,7 +31,7 @@ exports.registerUser = registerUser;
 const loginUser = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(email);
-        const user = yield user_model_1.User.findOne({ email });
+        const user = yield user_model_1.userModel.findOne({ email });
         console.log("1", password);
         console.log("2", user);
         if (!user) {

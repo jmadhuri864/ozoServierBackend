@@ -1,24 +1,20 @@
 import mongoose from "mongoose";
 
 import { type } from "os";
-import { Title } from "./title.model";
-import { category } from "../interfaces/category.interface";
+import { titleModel } from "./title.model";
+import { Category } from "../interfaces/category.interface";
 
-const categorySchema = new mongoose.Schema<category>({
-  c_id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+const categorySchema = new mongoose.Schema<Category>({
+
   cName: {
     type: String,
     required: true,
   },
   t_id: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Title",
     required: true,
-  },
+  }
 });
 
-export const Category = mongoose.model<category>("Category", categorySchema);
+export const categoryModel = mongoose.model<Category>("Category", categorySchema);

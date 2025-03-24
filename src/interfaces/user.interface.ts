@@ -1,9 +1,8 @@
-export interface user{
-    u_id:Number;
-    image:String;
-    firstName:String;
-    lastName:String;
-    mobileNo:String;
-    email:String;
-    password:String
+export interface User {
+  image: string;
+  firstName: string;
+  lastName: string;
+  mobileNo: string;
+  email: string;
+  password: string;
 }

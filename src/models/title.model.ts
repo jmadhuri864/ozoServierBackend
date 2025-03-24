@@ -1,18 +1,12 @@
 import mongoose from "mongoose";
-import {title} from '../interfaces/title.interface'
+import { Title } from "../interfaces/title.interface";
 
-import { type } from "os";
-
-const titleSchema = new mongoose.Schema<title>({
-  t_id: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
+const titleSchema = new mongoose.Schema<Title>({
   tName: {
     type: String,
+    unique: true,
     required: true,
-  }
+  },
 });
 
-export const Title = mongoose.model<title>("Title", titleSchema);
+export const titleModel = mongoose.model<Title>("Title", titleSchema);
