@@ -1,8 +1,10 @@
-export interface User {
-  image: string;
-  firstName: string;
-  lastName: string;
-  mobileNo: string;
-  email: string;
-  password: string;
+
+export interface IUser extends Document {
+    profilePhoto : string;
+    lastName : string;
+    firstName : string;
+    phoneNumber : string;
+    emailAddress : string;
+    password : string;
+    termsCondition : boolean;
 }

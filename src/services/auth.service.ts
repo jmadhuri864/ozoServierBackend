@@ -1,46 +1,70 @@
-import { userModel } from "../models/user.model";
-import express from "express";
-import { User } from "../interfaces/user.interface";
-import bcrypt from 'bcryptjs'
-import { LoginDto } from "../dtos/auth.dto";
-import jwt from 'jsonwebtoken'
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import { User } from "../models/user.model";
+import bcrypt from "bcryptjs";
+import { LoginDto, SignUpDto } from "../dtos/auth.dto";
+dotenv.config();
 
-export const registerUser = async (userInfo: User) => {
-  const user = await userModel.findOne({ email: userInfo.email });
-  console.log(user);
-  if (!user) {
-    const hashedPassword=await bcrypt.hash(userInfo.password,10);
-    const newUser = new userModel({
-      image:userInfo.image,
-      firstName:userInfo.firstName,
-      lastName:userInfo.lastName,
-      mobileNo:userInfo.mobileNo,
-      email:userInfo.email,
-      password:hashedPassword
-    });
-    const savedUser = await newUser.save();
-    console.log(savedUser);
-    return newUser;
-  }
-  throw new Error("User already exist ");
-};
 
-export const signInService = async (login: LoginDto) => {
+export const registerUser = async (data: SignUpDto) => {
   try {
-    const user = await userModel.findOne({ email: login.email });
-    if (!user) {
-      return {status:401,message:'Unauthorized'};
+    const {
+      profilePhoto,
+      lastName,
+      firstName,
+      phoneNumber,
+      emailAddress,
+      password,
+      termsCondition,
+    } = data;
+    
+    const userExit = await User.findOne({ emailAddress });
+    if (userExit) {
+      return false;
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      profilePhoto,
+      lastName,
+      firstName,
+      phoneNumber,
+      emailAddress,
+      password: hashedPassword,
+      termsCondition,
+    });
 
-    }
-    const isMatch=await bcrypt.compare(login.password,user.password)
-    if (isMatch) {
-      const token=jwt.sign({email:user.email,_id:user._id},process.env.JWT_SECRET as string);
-      return {status:200,message:`login suceesfully`,token};
-    } else {
-      return {status:401,message:'invalid password'};
-    }
+    const saveUser = await newUser.save();
+    return true;
   } catch (error) {
-    throw error;
+    return { message: "Faild to create user" };
   }
 };
 
+//Todo : Service for 
+const JWT_SECRET = process.env.JWT_SECRET as string;
+if (!JWT_SECRET) {
+   new Error("JWT_SECRET is missing in the .env file");
+}
+
+export const signInService = async (data: LoginDto) => {
+  try {
+    const userExists = await User.findOne({ emailAddress: data.emailAddress });
+
+    if (!userExists) {
+      return { success: false, message: "User not found" };
+    }
+
+    const isMatch = await bcrypt.compare(data.password, userExists.password);
+    if (!isMatch) {
+      return { success: false, message: "Invalid password" };
+    }
+
+    console.log(JWT_SECRET);
+    const token = jwt.sign({ userId: userExists._id },JWT_SECRET , { expiresIn: "1h" });
+
+    return { success: true, message: "Login successful", token };
+  
+  } catch (error) {
+    return { success: false, message: "Failed to login" };
+  }
+};

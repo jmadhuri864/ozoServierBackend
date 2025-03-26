@@ -1,11 +1,11 @@
-import express from "express";
-import { signUp,signIn} from "../controllers/auth.controller";
+import {Router} from "express"
 import { validateDto } from "../middlewares/validateDto.middleware";
-import { SignUpDto } from "../dtos/auth.dto";
-import { LoginDto } from "../dtos/auth.dto";
-const authRoute = express.Router();
+import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 
-authRoute.post("/signup", validateDto(SignUpDto),signUp);
-authRoute.post("/login", validateDto(LoginDto),signIn);
+import {  signIn, signUp } from "../controllers/auth.controller";
 
+const authRoute = Router();
+
+authRoute.post("/signup", validateDto(SignUpDto), signUp);
+authRoute.post("/login", validateDto(LoginDto), signIn);
 export default authRoute;
