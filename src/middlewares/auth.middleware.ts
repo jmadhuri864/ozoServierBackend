@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export interface AuthenticatedRequest extends Request {
-  user?: any; 
+  user?: any 
 }
 
 export const authenticateUser=async (req:AuthenticatedRequest,res:Response,next:NextFunction):Promise<any>=>{

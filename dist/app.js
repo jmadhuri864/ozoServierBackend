@@ -14,14 +14,13 @@ const booking_route_1 = require("./routes/booking.route");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-const mongoURI = "mongodb://127.0.0.1:27017/OZOSERVIR";
-const port = process.env.PORT || 1000;
+const PORT = process.env.MONGO_UR;
 mongoose_1.default
-    .connect(mongoURI)
+    .connect(PORT)
     .then(() => {
     console.log("database connect successfully");
-    app.listen(port, () => {
-        console.log(`app started on port : ${port}`);
+    app.listen(PORT, () => {
+        console.log(`app started on port : ${PORT}`);
     });
 })
     .catch((err) => console.log("ERROR in database connection", err));

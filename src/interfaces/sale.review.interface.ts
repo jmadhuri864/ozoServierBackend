@@ -6,4 +6,5 @@ export interface Review{
     s_id:mongoose.Types.ObjectId;
     description:string;
     rating:number;
+    timeStamp:Date;
 }

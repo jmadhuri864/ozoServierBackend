@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import {userModel} from './user.model'
 import { saleModel } from './sale.model'
-import { Review } from '../interfaces/review.interface';
+import { Review } from '../interfaces/sale.review.interface';
 
 const reviewSchema=new mongoose.Schema<Review>({
 
@@ -29,6 +29,9 @@ const reviewSchema=new mongoose.Schema<Review>({
         min:1,
         max:5,
         required:true
+    },
+    timeStamp:{
+        type:Date,
     }
 });
 

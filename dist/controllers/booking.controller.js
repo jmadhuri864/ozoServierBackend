@@ -12,7 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeBooking = void 0;
 const booking_service_1 = require("../services/booking.service");
 const makeBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const validBookingInfo = req.body;
-    const booking = yield (0, booking_service_1.createBooking)(validBookingInfo);
+    const u_id = req.user._id;
+    console.log(u_id);
+    console.log(req.body);
+    const booking = yield (0, booking_service_1.createBooking)(req.body, u_id);
+    res.status(booking.status).json(booking.message);
 });
 exports.makeBooking = makeBooking;

@@ -1,7 +1,7 @@
-import { Category } from "../interfaces/category.interface";
-import { categoryModel } from "../models/category.model";
-import { titleModel } from "../models/title.model";
-import { CreateCategoryDto } from "../dtos/category.dto";
+import { Category } from "../interfaces/sale.category.interface";
+import { categoryModel } from "../models/sale.category.model";
+import { titleModel } from "../models/sale.title.model";
+import { CreateCategoryDto } from "../dtos/sale.category.dto";
 import mongoose from "mongoose";
 
 export const getCatgory = async (categoryInfo: CreateCategoryDto) => {

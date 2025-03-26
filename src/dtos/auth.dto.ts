@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, Length, Matches } from "class-validator";
 
-export class CreateUserDto{
+export class SignUpDto{
     @IsString()
     @IsNotEmpty({message:"image is required"})
     image!: string;
@@ -30,7 +30,7 @@ export class CreateUserDto{
 }
 
 
-export class LoginUserDto{
+export class LoginDto{
   @IsEmail()
     email!: string;
 

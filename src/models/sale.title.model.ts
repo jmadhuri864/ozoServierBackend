@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Title } from "../interfaces/title.interface";
+import { Title } from "../interfaces/sale.title.interface";
 
 const titleSchema = new mongoose.Schema<Title>({
   tName: {

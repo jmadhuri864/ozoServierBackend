@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import { userModel } from "./user.model";
 import { saleModel } from "./sale.model";
-import { reviewModel } from "./review.model";
+import { reviewModel } from "./sale.review.model";
 import { type } from "os";
-import { Booking } from "../interfaces/booking.interface";
+import { Booking } from "../interfaces/sale.booking.interface";
 
 const bookingSchema = new mongoose.Schema<Booking>({
   

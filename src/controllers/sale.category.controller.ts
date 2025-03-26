@@ -1,7 +1,7 @@
-import { CreateCategoryDto } from "./../dtos/category.dto";
+import { CreateCategoryDto } from "../dtos/sale.category.dto";
 import express, { Request, Response } from "express";
-import { Category } from "./../interfaces/category.interface";
-import { getCatgory } from "../services/category.service";
+import { Category } from "../interfaces/sale.category.interface";
+import { getCatgory } from "../services/sale.category.service";
 
 export const createCategory = async (
   req: Request,

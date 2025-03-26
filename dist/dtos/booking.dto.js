@@ -16,6 +16,7 @@ class CreateBookingDto {
 exports.CreateBookingDto = CreateBookingDto;
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
@@ -28,11 +29,12 @@ __decorate([
 ], CreateBookingDto.prototype, "s_id", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Date)
 ], CreateBookingDto.prototype, "bookingDataTime", void 0);
 __decorate([
     (0, class_validator_1.IsEnum)(["Confirmed", "Completed", "Declaim"]),
     (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", Array)
+    __metadata("design:type", String)
 ], CreateBookingDto.prototype, "status", void 0);

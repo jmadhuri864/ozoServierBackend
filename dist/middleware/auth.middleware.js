@@ -29,7 +29,8 @@ const authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         const extractedToken = token.replace('Bearer ', "");
         console.log(extractedToken);
         const decoded = jsonwebtoken_1.default.verify(extractedToken, process.env.JWT_SECRET);
-        req.body = decoded;
+        req.user = decoded;
+        console.log(req.user);
         console.log(req.body);
         next();
     }

@@ -1,32 +1,33 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import router from "./routes/users.route";
-import { route } from "./routes/title.route";
-import categoryRouter from "./routes/category.route";
+import authRoute from "./routes/auth.route";
+import { saleTitleRoute } from "./routes/sale.title.route";
+import saleCategoryRoute from "./routes/sale.category.route";
 import saleRouter from "./routes/sale.route";
-import { bookingRouter } from "./routes/booking.route";
+import { saleBookingRouter } from "./routes/sale.booking.route";
+import { saleReviewRouter } from "./routes/sale.review.route";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-const mongoURI: string = "mongodb://127.0.0.1:27017/OZOSERVIR";
-const port = process.env.PORT || 1000;
-
+const URI = process.env.MONGO_URI as string;
+const PORT = process.env.PORT || 1000;
 mongoose
-  .connect(mongoURI)
+  .connect(URI)
   .then(() => {
     console.log("database connect successfully");
-    app.listen(port, () => {
-      console.log(`app started on port : ${port}`);
+    app.listen(PORT, () => {
+      console.log(`app started on port : ${PORT}`);
     });
   })
   .catch((err: Error) => console.log("ERROR in database connection", err));
 
-app.use("/api/user", router);
-app.use("/api/title", route);
-app.use("/api/category",categoryRouter);
-app.use("/api/sale",saleRouter);
-app.use("/api/booking",bookingRouter);
+app.use("/api/user", authRoute);
+app.use("/api/sale/title", saleTitleRoute);
+app.use("/api/sale/category", saleCategoryRoute);
+app.use("/api/sale", saleRouter);
+app.use("/api/sale/booking", saleBookingRouter);
+app.use("/api/sale/review", saleReviewRouter);

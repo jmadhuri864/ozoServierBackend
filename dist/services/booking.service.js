@@ -10,6 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createBooking = void 0;
-const createBooking = (validBookingInfo) => __awaiter(void 0, void 0, void 0, function* () {
+const booking_model_1 = require("../models/booking.model");
+const createBooking = (validBookingInfo, u_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const booking = new booking_model_1.bookingModel({
+            u_id: u_id,
+            s_id: validBookingInfo.s_id,
+            bookingDataTime: Date.now,
+            status: validBookingInfo.status
+        });
+        yield booking.save();
+        return { status: 201, message: "successfully created" };
+    }
+    catch (error) {
+        return { status: 500, message: "Internal server error" };
+    }
 });
 exports.createBooking = createBooking;

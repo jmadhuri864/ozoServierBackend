@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 import { type } from "os";
-import { titleModel } from "./title.model";
-import { Category } from "../interfaces/category.interface";
+import { titleModel } from "./sale.title.model";
+import { Category } from "../interfaces/sale.category.interface";
 
 const categorySchema = new mongoose.Schema<Category>({
 

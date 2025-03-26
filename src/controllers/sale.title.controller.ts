@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { postTitle } from "../services/title.service";
-import { Title } from "../interfaces/title.interface";
-import { CreateTitleDto } from "../dtos/title.dto";
+import { postTitle } from "../services/sale.title.service";
+import { Title } from "../interfaces/sale.title.interface";
+import { CreateTitleDto } from "../dtos/sale.title.dto";
 export const createTitle = async (req: Request, res: Response) => {
   const titleInfo: CreateTitleDto = req.body;
   const title = await postTitle(titleInfo);

@@ -1,8 +1,8 @@
 
 import mongoose from "mongoose";
 import { userModel } from "./user.model";
-import { titleModel } from "./title.model";
-import { categoryModel } from "./category.model";
+import { titleModel } from "./sale.title.model";
+import { categoryModel } from "./sale.category.model";
 import { Sale } from "../interfaces/sale.interface";
 import { type } from "os";
 

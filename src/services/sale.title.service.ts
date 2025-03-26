@@ -1,6 +1,6 @@
-import { Title } from './../interfaces/title.interface';
-import { titleModel } from "../models/title.model";
-import { CreateTitleDto } from '../dtos/title.dto';
+import { Title } from '../interfaces/sale.title.interface';
+import { titleModel } from "../models/sale.title.model";
+import { CreateTitleDto } from '../dtos/sale.title.dto';
 
 export const postTitle = async (titleInfo: CreateTitleDto) => {
  // console.log(titleInfo);
