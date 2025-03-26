@@ -1,12 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import titleRoute from "./routes/title.routes";
-import categoryRoute from "./routes/category.routes";
-import serviceRoute from "./routes/service.routes";
-import bookingRoute from "./routes/booking.routes";
-import reviewRoute from "./routes/review.routes";
-import userRoute from "./routes/user.routes";
+import serviceRoute from "./routes/service.route";
+import authRoute from "./routes/auth.route";
+import serviceTitleRoute from "./routes/service.title.route";
+import serviceBookingRoute from "./routes/service.booking.route";
+import serviceCategoryRoute from "./routes/service.category.route";
+import serviceReviewRoute from "./routes/service.review.route";
 
 
 const app = express();
@@ -31,9 +31,9 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use("/api/user", userRoute);
-app.use("/api/title", titleRoute);
-app.use("/api/category", categoryRoute);
+app.use("/api/user", authRoute);
+app.use("/api/service/title", serviceTitleRoute);
+app.use("/api/service/category", serviceCategoryRoute);
 app.use("/api/service", serviceRoute);
-app.use("/api/booking", bookingRoute); 
-app.use("/api/review", reviewRoute);
+app.use("/api/service/booking", serviceBookingRoute); 
+app.use("/api/service/review", serviceReviewRoute);
