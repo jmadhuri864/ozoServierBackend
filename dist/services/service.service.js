@@ -9,10 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
+exports.getAllService = exports.updateService = exports.createService = void 0;
+const service_category_model_1 = require("../models/service.category.model");
+const service_model_1 = require("../models/service.model");
+=======
 exports.getServiceService = exports.getAllService = exports.updateService = exports.createService = void 0;
 const service_category_model_1 = require("../models/service.category.model");
 const service_model_1 = require("../models/service.model");
 const sale_title_model_1 = require("../models/sale.title.model");
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 //Todo : Post Service
 const createService = (data, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -86,6 +92,8 @@ const getAllService = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllService = getAllService;
+<<<<<<< HEAD
+=======
 const getServiceService = (title) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const getTitle = yield sale_title_model_1.titleModel.findOne({
@@ -107,3 +115,4 @@ const getServiceService = (title) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getServiceService = getServiceService;
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

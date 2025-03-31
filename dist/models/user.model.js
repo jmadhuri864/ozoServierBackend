@@ -8,31 +8,49 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
     profilePhoto: {
         type: String,
+<<<<<<< HEAD
+        required: true
+=======
         required: true,
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     },
     lastName: {
         type: String,
-        required: true,
+        required: true
     },
     firstName: {
         type: String,
-        required: true,
+        required: true
     },
     phoneNumber: {
+<<<<<<< HEAD
+        type: String,
+        required: true
+    },
+    emailAddress: {
+        type: String,
+        required: true
+=======
         type: String,
         required: true,
     },
     emailAddress: {
         type: String,
         required: true,
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     },
     password: {
         type: String,
-        required: true,
+        required: true
     },
     termsCondition: {
         type: Boolean,
+<<<<<<< HEAD
+        required: true
+    }
+=======
         required: true,
     },
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 });
 exports.User = mongoose_1.default.model("User", userSchema);

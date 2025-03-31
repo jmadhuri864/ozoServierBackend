@@ -82,27 +82,25 @@ export const getAllService = async (): Promise<{
   }
 };
 
-export const getServiceService = async (title: string) => {
+//Todo : Delete Service
+export const deleteService = async(data:string) => {
   try {
-    const getTitle = await titleModel.findOne({
-     tName: { $regex: title.trim(), $options: "i" },
-    });
-    console.log(getTitle);
     
-    if (!getTitle) {
-      return { status: 404, message: "sale not exist" };
-    }
-    const titleId = getTitle?._id;
-    const getSales = await Service.find({ t_id:
-      
-      titleId });
+     return await Service.findByIdAndDelete({_id : data});
 
-    if (getSales.length==0) {
-      return { status: 404, message: "sale not exist" };
-    }
-    return { status: 200, message: "success", data: getSales };
   } catch (error) {
-    return { status: 500, message: "Internal Server Error" };
+    return { status: 500, message: "Internal server error" };
   }
-};
+}
 
+//Todo : Search Service
+
+export const searchService = async (key : string) => {
+  try {
+    
+    return await Service.find({titleId : key})
+
+  } catch (error) {
+    
+  }
+}

@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
+exports.getAll = exports.createSale = void 0;
+=======
 exports.getSale = exports.updateSale = exports.getAll = exports.createSale = void 0;
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 const sale_service_1 = require("../services/sale.service");
 const sale_service_2 = require("../services/sale.service");
 const createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,6 +36,8 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         .json({ message: allSale.message, allSale: allSale.data });
 });
 exports.getAll = getAll;
+<<<<<<< HEAD
+=======
 const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.userId;
@@ -55,3 +61,4 @@ const getSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getSale = getSale;
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

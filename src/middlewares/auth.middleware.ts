@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-//import { isBlackListed } from "../services/auth.service";
+import redisClient from "../config/redis";
+import { Blacklist } from "../models/blacklist.model";
 
 dotenv.config();
 
@@ -9,30 +10,33 @@ export interface AuthRequest extends Request {
   user?: any;
 }
 
-export const authenticateUser: any = async(
+export const authMiddleware = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
-) => {
+): Promise<any> => {
   const authHeader = req.header("Authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Authorization token is required" });
   }
 
   const token = authHeader.split(" ")[1];
+
   try {
-    // const blackListed=await isBlackListed(token);
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-    // if (blackListed) {
-    //     return res.status(401).json({ message: "Unauthorized: Token is blacklisted" });
-    // }
-
-    const decode = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decode;
-    //  console.log(req.user);
-
+    const blacklisted = await Blacklist.findOne({ token });
+    if (blacklisted) {
+      return res
+        .status(401)
+        .json({ message: "Token blacklisted. Please log in again." });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    req.user = decoded;
     next();
   } catch (error) {
-    return res.status(403).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };

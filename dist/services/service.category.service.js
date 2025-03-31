@@ -26,7 +26,11 @@ const createCategory = (data) => __awaiter(void 0, void 0, void 0, function* () 
         const titleId = titleExists._id;
         const newCategory = new service_category_model_1.Category({
             name: data.name,
+<<<<<<< HEAD
+            title: titleId
+=======
             title: titleId,
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
         });
         const saveCategory = yield newCategory.save();
         return true;

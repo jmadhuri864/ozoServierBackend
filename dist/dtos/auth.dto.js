@@ -23,7 +23,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
+<<<<<<< HEAD
+], SignUpDto.prototype, "lastName", void 0);
+=======
 ], SignUpDto.prototype, "LastName", void 0);
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),

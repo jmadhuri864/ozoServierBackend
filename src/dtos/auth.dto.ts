@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
+  Length,
   Matches,
 } from "class-validator";
 
@@ -13,7 +14,7 @@ export class SignUpDto {
 
   @IsString()
   @IsNotEmpty()
-  LastName!: string;
+  lastName!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -41,7 +42,40 @@ export class LoginDto {
   @IsNotEmpty({ message: "Email is required" })
   emailAddress!: string;
 
-  @IsString({ message: "Password must be string" })
-  @IsNotEmpty({ message: "Password is required" })
-  password!: string;
+    @IsString({message : "Password must be string"})
+    @IsNotEmpty({message : "Password is required"})
+    password !: string; 
+}
+
+export class SendOtpDto {
+  @IsEmail({}, { message: "Invalid email format" })
+  @IsNotEmpty({ message: "Email is required" })
+  emailAddress!: string;
+}
+
+export class VerifyOtpDto {
+  @IsEmail({}, { message: "Invalid email format" })
+  @IsNotEmpty({ message: "Email is required" })
+  emailAddress!: string;
+
+  @IsString()
+  @Length(6, 6, { message: "OTP must be exactly 6 digits" })
+  @IsNotEmpty({ message: "OTP is required" })
+  otp!: string;
+}
+
+export class ResetPasswordDto {
+  @IsEmail({}, { message: "Invalid email format" })
+  @IsNotEmpty({ message: "Email is required" })
+  emailAddress!: string;
+
+  @IsString()
+  @Length(6, 6, { message: "OTP must be exactly 6 digits" })
+  @IsNotEmpty({ message: "OTP is required" })
+  otp!: string;
+
+  @IsString()
+  @Length(6, 20, { message: "Password must be between 6 and 20 characters" })
+  @IsNotEmpty({ message: "New password is required" })
+  newPassword!: string;
 }

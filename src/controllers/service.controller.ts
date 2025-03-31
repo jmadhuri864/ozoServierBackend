@@ -1,10 +1,5 @@
 import { AuthRequest } from "../middlewares/auth.middleware";
-import {
-  createService,
-  getAllService,
-  updateService,
-  getServiceService
-} from "../services/service.service";
+import { createService, deleteService, getAllService, updateService } from "../services/service.service";
 import { Request, Response } from "express";
 
 //Todo : Controller for Post Service
@@ -56,19 +51,25 @@ export const getAllController = async (
     if (!result.success) {
       return res.status(500).json(result);
     }
-
-    return res.status(200).json(result);
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({message : "Internal server error"})
   }
-};
+}
 
-export const getService = async (req: Request, res: Response) => {
+//Todo : Controller for Delete Service
+export const deleteController = async(req: Request, res: Response) : Promise<any> => {
   try {
-    const title = req.params.name;
-    const service = await getServiceService(title);
-    res.status(service.status).json({ message: service.message ,data:service.data});
+    const result = await deleteService(req.params.id);
+
+    if(!result)
+    {
+      return res.status(201).json({message : "Service not found"});
+    }
+
+    return res.status(200).json({message : "Service deleted successfully"}) 
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({message : "Internal server error"})
   }
-};
+}
+
+

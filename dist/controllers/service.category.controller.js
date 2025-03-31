@@ -17,9 +17,13 @@ const categoryInsert = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (categoryIn) {
             return res.status(201).json({ message: "Category insert successfullly" });
         }
+<<<<<<< HEAD
+        return res.status(409).json({ message: "Title or category name already exit" });
+=======
         return res
             .status(409)
             .json({ message: "Title or category name already exit" });
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     }
     catch (error) {
         res.status(500).json({ message: "something Wrong" });

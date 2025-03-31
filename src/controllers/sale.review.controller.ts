@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { authenticateUser, AuthRequest } from "../middlewares/auth.middleware";
+import {  AuthRequest } from "../middlewares/auth.middleware";
 import {
   CreateReview,
   getAllReviewService,
