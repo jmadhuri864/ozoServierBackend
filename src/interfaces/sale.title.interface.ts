@@ -1,3 +1,3 @@
-export interface Title{
-    tName:string;
+export interface Title {
+  tName: string;
 }

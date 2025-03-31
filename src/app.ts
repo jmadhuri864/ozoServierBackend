@@ -7,13 +7,19 @@ import saleCategoryRoute from "./routes/sale.category.route";
 import saleRouter from "./routes/sale.route";
 import { saleBookingRouter } from "./routes/sale.booking.route";
 import { saleReviewRouter } from "./routes/sale.review.route";
+import serviceTitleRoute from "./routes/service.title.route";
+import serviceBookingRoute from "./routes/service.booking.route";
+import serviceCategoryRoute from "./routes/service.category.route";
+import serviceReviewRoute from "./routes/service.review.route";
+import serviceRoute from "./routes/service.route";
+import { userRuote } from "./routes/user.route";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-const URI = process.env.MONGO_URI as string;
+const URI = process.env.MONGO_URL as string;
 const PORT = process.env.PORT || 1000;
 mongoose
   .connect(URI)
@@ -25,9 +31,16 @@ mongoose
   })
   .catch((err: Error) => console.log("ERROR in database connection", err));
 
-app.use("/api/user", authRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRuote);
 app.use("/api/sale/title", saleTitleRoute);
 app.use("/api/sale/category", saleCategoryRoute);
 app.use("/api/sale", saleRouter);
 app.use("/api/sale/booking", saleBookingRouter);
 app.use("/api/sale/review", saleReviewRouter);
+
+app.use("/api/service/title", serviceTitleRoute);
+app.use("/api/service/category", serviceCategoryRoute);
+app.use("/api/service", serviceRoute);
+app.use("/api/service/booking", serviceBookingRoute);
+app.use("/api/service/review", serviceReviewRoute);

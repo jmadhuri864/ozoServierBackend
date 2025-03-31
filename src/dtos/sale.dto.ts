@@ -40,8 +40,9 @@ export class CreateSaleDto {
   @IsEnum(["Fixed", "Negotiable"], {
     message: "Condition must be either 'Fixed' or 'Negotiable'",
   })
-  condition!: string ;
+  condition!: string;
+
   @IsString()
   @IsNotEmpty()
-  location!:string;
+  location!: string;
 }

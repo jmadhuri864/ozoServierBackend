@@ -9,40 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUserDto = void 0;
+exports.UserDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateUserDto {
+class UserDto {
 }
-exports.CreateUserDto = CreateUserDto;
+exports.UserDto = UserDto;
+__decorate([
+    (0, class_validator_1.IsString)({ message: "Invalid name formate" }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UserDto.prototype, "profilePhoto", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "image is required" }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "image", void 0);
+], UserDto.prototype, "LastName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "name is required" }),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "firstName", void 0);
+], UserDto.prototype, "firstName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "lastName is required" }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.Matches)(/^[0-9]{10}$/, { message: "Mobile number must be 10 digits" }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "lastName", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Matches)(/^[1-9][0-9]{9}$/, { message: "Mobile number must be exactly 10 digits and cannot start with 0" }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "mobileNo", void 0);
+], UserDto.prototype, "phoneNumber", void 0);
 __decorate([
     (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
+], UserDto.prototype, "emailAddress", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(8, 20, { message: "Password must be between 8 and 20 characters" }),
-    (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!]).{8,20}$/, {
-        message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-    }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
+], UserDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UserDto.prototype, "termsCondition", void 0);

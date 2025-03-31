@@ -1,10 +1,10 @@
 import { CreateBookingDto } from "../dtos/sale.booking.dto";
 import { bookingModel } from "../models/sale.booking.model";
-import { AuthenticatedRequest } from "../middlewares/auth.middleware";
+import { authenticateUser, AuthRequest } from "../middlewares/auth.middleware";
 
 export const createBooking = async (
   validBookingInfo: CreateBookingDto,
-  u_id: AuthenticatedRequest
+  u_id: AuthRequest
 ) => {
   try {
     console.log("hiiiii");
