@@ -80,3 +80,26 @@ export const getAllService = async (): Promise<{
     return { success: false, message: "Internal Server Error" };
   }
 };
+
+//Todo : Delete Service
+export const deleteService = async(data:string) => {
+  try {
+    
+     return await Service.findByIdAndDelete({_id : data});
+
+  } catch (error) {
+    return { status: 500, message: "Internal server error" };
+  }
+}
+
+//Todo : Search Service
+
+export const searchService = async (key : string) => {
+  try {
+    
+    return await Service.find({titleId : key})
+
+  } catch (error) {
+    
+  }
+}

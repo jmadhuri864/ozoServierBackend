@@ -7,4 +7,6 @@ export interface IUser extends Document {
     emailAddress : string;
     password : string;
     termsCondition : boolean;
+    otp ?: string | null;
+    otpExpires ?: Date | null;
 }

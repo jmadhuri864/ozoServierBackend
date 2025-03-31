@@ -30,7 +30,15 @@ const userSchema = new mongoose.Schema<IUser>(
         termsCondition : {
             type : Boolean,
             required : true
-        }
+        },
+        otp: { 
+            type: String,
+            default : null
+         },
+        otpExpires: { 
+            type: Date,
+            default : null
+         }
     }
 )
 

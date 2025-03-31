@@ -10,4 +10,4 @@ const categorySchema = new mongoose.Schema<ICategory>(
     }
 )
 
-export const Category = mongoose.model<ICategory>("Category", categorySchema);
+export const Category = mongoose.model<ICategory>("ServiceCategory", categorySchema);

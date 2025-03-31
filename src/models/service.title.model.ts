@@ -5,4 +5,4 @@ const titleSchema = new mongoose.Schema<ITitle>({
     name: { type: String, required: true }
 },{ timestamps: true });
 
-export const Title = mongoose.model<ITitle>('Title', titleSchema);
+export const Title = mongoose.model<ITitle>('ServiceTitle', titleSchema);

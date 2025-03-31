@@ -9,4 +9,4 @@ const titleSchema = new mongoose.Schema<Title>({
   },
 });
 
-export const titleModel = mongoose.model<Title>("Title", titleSchema);
+export const titleModel = mongoose.model<Title>("SaleTitle", titleSchema);

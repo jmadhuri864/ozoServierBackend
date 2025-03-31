@@ -17,4 +17,4 @@ const categorySchema = new mongoose.Schema<Category>({
   }
 });
 
-export const categoryModel = mongoose.model<Category>("Category", categorySchema);
+export const categoryModel = mongoose.model<Category>("SaleCategory", categorySchema);

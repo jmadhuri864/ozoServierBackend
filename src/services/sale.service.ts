@@ -1,12 +1,6 @@
 import { categoryModel } from "../models/sale.category.model";
 import { saleModel } from "./../models/sale.model";
-import { Category } from "../interfaces/sale.category.interface";
-import { Title } from "../interfaces/sale.title.interface";
-import { Sale } from "../interfaces/sale.interface";
-import { userModel } from "../models/user.model";
-import { titleModel } from "../models/sale.title.model";
 import { CreateSaleDto } from "../dtos/sale.dto";
-import mongoose, { Mongoose, Types, Schema } from "mongoose";
 
 export const postSale = async (saleInfo: CreateSaleDto) => {
   const saleExistWithUser = await saleModel.find({ u_id: saleInfo.u_id });
@@ -46,3 +40,14 @@ export const getAllSale = async () => {
     return { status: 500, message: "Internal server error" };
   }
 };
+
+//Todo : Delete Sale
+export const deleteSale = async(data:string) => {
+  try {
+    
+     return await saleModel.findByIdAndDelete({_id : data});
+
+  } catch (error) {
+    return { status: 500, message: "Internal server error" };
+  }
+}

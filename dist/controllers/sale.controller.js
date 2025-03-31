@@ -9,17 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSale = void 0;
+exports.getAll = exports.createSale = void 0;
 const sale_service_1 = require("../services/sale.service");
 const createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const saleInfo = req.body;
-        const sale = yield (0, sale_service_1.getSale)(saleInfo);
+        const sale = yield (0, sale_service_1.postSale)(saleInfo);
         console.log(sale);
         return res.status(sale.status).json(sale.message);
     }
     catch (error) {
-        return res.status(500).json({ message: 'Internal Server error' }), error;
+        return res.status(500).json({ message: "Internal Server error" }), error;
     }
 });
 exports.createSale = createSale;
+const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const allSale = yield (0, sale_service_1.getAllSale)();
+    console.log(allSale);
+    res
+        .status(allSale.status)
+        .json({ message: allSale.message, allSale: allSale.data });
+});
+exports.getAll = getAll;

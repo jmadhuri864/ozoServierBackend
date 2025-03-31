@@ -1,6 +1,4 @@
 import mongoose from 'mongoose'
-import {userModel} from './user.model'
-import { saleModel } from './sale.model'
 import { Review } from '../interfaces/sale.review.interface';
 
 const reviewSchema=new mongoose.Schema<Review>({
@@ -35,4 +33,4 @@ const reviewSchema=new mongoose.Schema<Review>({
     }
 });
 
-export const reviewModel=mongoose.model<Review>('Review',reviewSchema);
+export const reviewModel=mongoose.model<Review>('SaleReview',reviewSchema);

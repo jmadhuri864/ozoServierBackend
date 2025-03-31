@@ -1,5 +1,5 @@
 import { AuthRequest } from "../middlewares/auth.middleware";
-import { createService, getAllService, updateService } from "../services/service.service";
+import { createService, deleteService, getAllService, searchService, updateService } from "../services/service.service";
 import { Request, Response } from "express";
 
 //Todo : Controller for Post Service
@@ -49,3 +49,29 @@ export const getAllController = async (req : Request, res : Response): Promise<a
     }
 }
 
+//Todo : Controller for Delete Service
+export const deleteController = async(req: Request, res: Response) : Promise<any> => {
+  try {
+    const result = await deleteService(req.params.id);
+
+    if(!result)
+    {
+      return res.status(201).json({message : "Service not found"});
+    }
+
+    return res.status(200).json({message : "Service deleted successfully"}) 
+  } catch (error) {
+    return res.status(500).json({message : "Internal server error"})
+  }
+}
+
+//Todo : Search implimetation
+
+const searchCategory = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const {searchKey} = req.params;
+        const result = await searchService(searchKey);
+    } catch (error) {
+        
+    }
+}

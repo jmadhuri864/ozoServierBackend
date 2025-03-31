@@ -3,9 +3,12 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
 import bcrypt from "bcryptjs";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
+import { Blacklist } from "../models/blacklist.model";
+import { generateOTP } from "../utils/otp.util";
+import { sendMail } from "../utils/mail.util";
 dotenv.config();
 
-
+//Todo : Service for Register
 export const registerUser = async (data: SignUpDto) => {
   try {
     const {
@@ -17,7 +20,7 @@ export const registerUser = async (data: SignUpDto) => {
       password,
       termsCondition,
     } = data;
-    
+
     const userExit = await User.findOne({ emailAddress });
     if (userExit) {
       return false;
@@ -40,10 +43,10 @@ export const registerUser = async (data: SignUpDto) => {
   }
 };
 
-//Todo : Service for 
+//Todo : Service for SignIn
 const JWT_SECRET = process.env.JWT_SECRET as string;
 if (!JWT_SECRET) {
-   new Error("JWT_SECRET is missing in the .env file");
+  new Error("JWT_SECRET is missing in the .env file");
 }
 
 export const signInService = async (data: LoginDto) => {
@@ -60,11 +63,81 @@ export const signInService = async (data: LoginDto) => {
     }
 
     console.log(JWT_SECRET);
-    const token = jwt.sign({ userId: userExists._id },JWT_SECRET , { expiresIn: "1h" });
+    const token = jwt.sign({ userId: userExists._id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     return { success: true, message: "Login successful", token };
-  
   } catch (error) {
     return { success: false, message: "Failed to login" };
   }
+};
+
+//Todo : Service for Logout
+export const logoutService = async (token: string) => {
+  try {
+    const decoded = jwt.decode(token) as { exp: number } | null;
+    if (!decoded || !decoded.exp) {
+      return { success: false, message: "Invalid token" };
+    }
+
+    // Store token in DB until it expire
+    await Blacklist.create({ token, expiresAt: new Date(decoded.exp * 1000) });
+
+    return { success: true, message: "Logged out successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to logout" };
+  }
+};
+
+//Todo : Service for SendOTP
+export const sendOTP = async (emailAddress: string) => {
+  const user = await User.findOne({ emailAddress });
+  if (!user) throw new Error("User not found");
+
+  const otp = generateOTP();
+  user.otp = otp;
+  user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+  await user.save();
+
+  await sendMail(
+    emailAddress,
+    "Your OTP Code",
+    `Your OTP is: ${otp}. It is valid for 10 minutes.`
+  );
+
+  return "OTP sent successfully";
+};
+
+//Todo : Service for VerifyOTP
+export const verifyOTP = async (emailAddress: string, otp: string) => {
+  const user = await User.findOne({ emailAddress });
+
+  if (!user || user.otp !== otp || new Date() > user.otpExpires!) {
+    throw new Error("Invalid or expired OTP");
+  }
+
+  return "OTP verified successfully";
+};
+
+//Todo : Service for ResetPassword
+export const resetPassword = async (
+  emailAddress: string,
+  otp: string,
+  newPassword: string
+) => {
+  const user = await User.findOne({ emailAddress });
+
+  if (!user || user.otp !== otp || new Date() > user.otpExpires!) {
+    throw new Error("Invalid or expired OTP");
+  }
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  user.otp = null;
+  user.otpExpires = null;
+
+  await user.save();
+
+  return "Password updated successfully";
 };
