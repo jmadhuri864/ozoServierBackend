@@ -1,9 +1,9 @@
 import { IsString } from "class-validator";
 
 export class CategoryDto {
-    @IsString()
-    name !: string;
+  @IsString()
+  name!: string;
 
-    @IsString()
-    title !: string;
+  @IsString()
+  title!: string;
 }

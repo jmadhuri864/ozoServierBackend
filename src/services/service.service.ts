@@ -2,9 +2,10 @@ import { Category } from "../models/service.category.model";
 import { ServiceDto } from "../dtos/service.dto";
 import { Service } from "../models/service.model";
 import { IService } from "../interfaces/service.interface";
+import { titleModel } from "../models/sale.title.model";
 
 //Todo : Post Service
-export const createService = async (data: ServiceDto, userId : any) => {
+export const createService = async (data: ServiceDto, userId: any) => {
   try {
     const categoryExit = await Category.findOne({ name: data.categoryId });
     if (categoryExit) {
@@ -80,3 +81,28 @@ export const getAllService = async (): Promise<{
     return { success: false, message: "Internal Server Error" };
   }
 };
+
+export const getServiceService = async (title: string) => {
+  try {
+    const getTitle = await titleModel.findOne({
+     tName: { $regex: title.trim(), $options: "i" },
+    });
+    console.log(getTitle);
+    
+    if (!getTitle) {
+      return { status: 404, message: "sale not exist" };
+    }
+    const titleId = getTitle?._id;
+    const getSales = await Service.find({ t_id:
+      
+      titleId });
+
+    if (getSales.length==0) {
+      return { status: 404, message: "sale not exist" };
+    }
+    return { status: 200, message: "success", data: getSales };
+  } catch (error) {
+    return { status: 500, message: "Internal Server Error" };
+  }
+};
+

@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateTitleDto{
-   @IsString()
-   @IsNotEmpty()
-    tName!:string;
+export class CreateTitleDto {
+  @IsString()
+  @IsNotEmpty()
+  tName!: string;
 }

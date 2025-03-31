@@ -1,4 +1,3 @@
-
 export interface ITitle {
-    name: string;
+  name: string;
 }

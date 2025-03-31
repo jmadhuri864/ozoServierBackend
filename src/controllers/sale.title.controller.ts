@@ -8,8 +8,6 @@ export const createTitle = async (req: Request, res: Response) => {
   if (title) {
     res.status(201).json({ message: "created" });
   } else {
-    res
-      .status(409)
-      .json({ message: `title already exist` });
+    res.status(409).json({ message: `title already exist` });
   }
 };

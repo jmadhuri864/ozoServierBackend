@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
-import { registerUser, signInService } from "../services/auth.service";
+import { registerUser, signInService ,/*blackListeToken*/} from "../services/auth.service";
 
-export const signUp = async (
-  req: Request,
-  res: Response
-): Promise<any> => {
+export const signUp = async (req: Request, res: Response): Promise<any> => {
   try {
     const userData = req.body;
     const signUp = await registerUser(userData);
     if (signUp) {
-      return res.status(201).json({ message: "Registration successfully"});
+      return res.status(201).json({ message: "Registration successfully" });
     } else {
       return res
         .status(400)
@@ -20,14 +17,14 @@ export const signUp = async (
   }
 };
 
-export const signIn = async (
-  req: Request,
-  res: Response
-): Promise<any> => {
+export const signIn = async (req: Request, res: Response): Promise<any> => {
   try {
     const logiData = req.body;
+    console.log(logiData);
 
     const login = await signInService(logiData);
+    console.log(login);
+
     if (!login) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -38,4 +35,17 @@ export const signIn = async (
   }
 };
 
+// export const logOut=async(req:any,res:any)=>{
+//   try
+//   {
+    
+//     const token = req.headers.authorization?.split(" ")[1];
+//     const login = await blackListeToken(token,3600);
+//     return res.status(200).json({ message: "Logged out successfully" });
+//   }
+//   catch(error)
+//   {
+//     return res.status(500).json({ message: "Server Error" });
+//   }
 
+// }

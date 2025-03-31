@@ -5,6 +5,6 @@ import { CategoryDto } from "../dtos/service.category.dto";
 
 const serviceCategoryRoute = express.Router();
 
-serviceCategoryRoute.post("/create",validateDto(CategoryDto), categoryInsert);
+serviceCategoryRoute.post("/create", validateDto(CategoryDto), categoryInsert);
 
 export default serviceCategoryRoute;

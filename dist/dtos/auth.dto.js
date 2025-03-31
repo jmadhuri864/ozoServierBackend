@@ -9,55 +9,56 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoginUserDto = exports.CreateUserDto = void 0;
+exports.LoginDto = exports.SignUpDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateUserDto {
+class SignUpDto {
 }
-exports.CreateUserDto = CreateUserDto;
+exports.SignUpDto = SignUpDto;
+__decorate([
+    (0, class_validator_1.IsString)({ message: "Invalid name formate" }),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "profilePhoto", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "image is required" }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "image", void 0);
+], SignUpDto.prototype, "LastName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "name is required" }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "firstName", void 0);
+], SignUpDto.prototype, "firstName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)({ message: "lastName is required" }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Matches)(/^[0-9]{10}$/, { message: "Mobile number must be 10 digits" }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "lastName", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Matches)(/^[1-9][0-9]{9}$/, { message: "Mobile number must be exactly 10 digits and cannot start with 0" }),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "mobileNo", void 0);
+], SignUpDto.prototype, "phoneNumber", void 0);
 __decorate([
     (0, class_validator_1.IsEmail)(),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
-__decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(8, 20, { message: "Password must be between 8 and 20 characters" }),
-    (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!]).{8,20}$/, {
-        message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-    }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "password", void 0);
-class LoginUserDto {
+], SignUpDto.prototype, "emailAddress", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], SignUpDto.prototype, "termsCondition", void 0);
+class LoginDto {
 }
-exports.LoginUserDto = LoginUserDto;
+exports.LoginDto = LoginDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsEmail)({}, { message: "Invalid email formate" }),
+    (0, class_validator_1.IsNotEmpty)({ message: "Email is required" }),
     __metadata("design:type", String)
-], LoginUserDto.prototype, "email", void 0);
+], LoginDto.prototype, "emailAddress", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.Length)(8, 20, { message: "Password must be between 8 and 20 characters" }),
-    (0, class_validator_1.Matches)(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!]).{8,20}$/, {
-        message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-    }),
+    (0, class_validator_1.IsString)({ message: "Password must be string" }),
+    (0, class_validator_1.IsNotEmpty)({ message: "Password is required" }),
     __metadata("design:type", String)
-], LoginUserDto.prototype, "password", void 0);
+], LoginDto.prototype, "password", void 0);

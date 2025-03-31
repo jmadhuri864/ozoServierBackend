@@ -4,7 +4,7 @@ import { Title } from "../models/service.title.model";
 export const titleService = async (data: TitleDto) => {
   try {
     console.log(data.name);
-    
+
     const exists = await Title.findOne({ name: data.name });
 
     if (exists) {
