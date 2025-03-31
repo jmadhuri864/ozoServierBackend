@@ -1,4 +1,3 @@
-
 export interface IUser extends Document {
     profilePhoto : string;
     lastName : string;

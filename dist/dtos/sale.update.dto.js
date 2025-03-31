@@ -9,44 +9,61 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserDto = void 0;
+exports.UpdateSaleDto = void 0;
 const class_validator_1 = require("class-validator");
-class UserDto {
+class UpdateSaleDto {
 }
-exports.UserDto = UserDto;
+exports.UpdateSaleDto = UpdateSaleDto;
 __decorate([
-    (0, class_validator_1.IsString)({ message: "Invalid name formate" }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UserDto.prototype, "profilePhoto", void 0);
+], UpdateSaleDto.prototype, "u_id", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateSaleDto.prototype, "t_id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateSaleDto.prototype, "c_id", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UserDto.prototype, "LastName", void 0);
+], UpdateSaleDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Array)
+], UpdateSaleDto.prototype, "itemImage", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateSaleDto.prototype, "price", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(["Fixed", "Negotiable"], {
+        message: "Condition must be either 'Fixed' or 'Negotiable'",
+    }),
     __metadata("design:type", String)
-], UserDto.prototype, "firstName", void 0);
+], UpdateSaleDto.prototype, "condition", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Matches)(/^[0-9]{10}$/, { message: "Mobile number must be 10 digits" }),
-    __metadata("design:type", String)
-], UserDto.prototype, "phoneNumber", void 0);
-__decorate([
-    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UserDto.prototype, "emailAddress", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], UserDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsBoolean)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Boolean)
-], UserDto.prototype, "termsCondition", void 0);
+], UpdateSaleDto.prototype, "location", void 0);

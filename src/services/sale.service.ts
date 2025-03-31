@@ -1,6 +1,10 @@
+import { Length } from 'class-validator';
+import { Sale } from "./../interfaces/sale.interface";
 import { categoryModel } from "../models/sale.category.model";
 import { saleModel } from "./../models/sale.model";
 import { CreateSaleDto } from "../dtos/sale.dto";
+import { titleModel } from '../models/sale.title.model';
+import { UpdateSaleDto } from '../dtos/sale.update.dto';
 
 export const postSale = async (saleInfo: CreateSaleDto) => {
   const saleExistWithUser = await saleModel.find({ u_id: saleInfo.u_id });
@@ -51,3 +55,40 @@ export const deleteSale = async(data:string) => {
     return { status: 500, message: "Internal server error" };
   }
 }
+
+export const getUpdatedSale = async (id: any, data: UpdateSaleDto) => {
+  try {
+    const updatedSale = await saleModel.findByIdAndUpdate(id, data);
+    if (!updatedSale) {
+      return { status: 404, message: "sale not found" };
+    }
+    console.log(updatedSale);
+    return { status: 200, message: "updated successfully" };
+  } catch (error) {
+    return { status: 5000, message: "Internal server error" };
+  }
+};
+
+export const getSaleService = async (title: string) => {
+  try {
+    const getTitle = await titleModel.findOne({
+     tName: { $regex: title.trim(), $options: "i" },
+    });
+    console.log(getTitle);
+    
+    if (!getTitle) {
+      return { status: 404, message: "sale not exist" };
+    }
+    const titleId = getTitle?._id;
+    const getSales = await saleModel.find({ t_id:
+      
+      titleId });
+
+    if (getSales.length==0) {
+      return { status: 404, message: "sale not exist" };
+    }
+    return { status: 200, message: "success", data: getSales };
+  } catch (error) {
+    return { status: 500, message: "Internal Server Error" };
+  }
+};

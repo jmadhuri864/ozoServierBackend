@@ -1,5 +1,9 @@
 import express from "express";
-import { createController, getAllController, updateController } from "../controllers/service.controller";
+import {
+  createController,
+  getAllController,
+  updateController
+} from "../controllers/service.controller";
 import { validateDto } from "../middlewares/validateDto.middleware";
 import { ServiceDto } from "../dtos/service.dto";
 import { authMiddleware } from "../middlewares/auth.middleware";

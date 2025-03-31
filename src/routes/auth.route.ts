@@ -1,4 +1,4 @@
-import {Router} from "express"
+import { Router } from "express";
 import { validateDto } from "../middlewares/validateDto.middleware";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 import {  logout, resetPasswordController, sendOTPController, signIn, signUp, verifyOTPController } from "../controllers/auth.controller";

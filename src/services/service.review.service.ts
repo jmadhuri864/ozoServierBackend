@@ -3,11 +3,15 @@ import { Booking } from "../models/service.booking.model";
 import { Review } from "../models/service.review.model";
 
 //Todo : Post Review
-export const createReview = async (data: ReviewDto, paramsData: any, userId: any) => {
+export const createReview = async (
+  data: ReviewDto,
+  paramsData: any,
+  userId: any
+) => {
   try {
     const { serviceid } = paramsData;
     console.log(serviceid);
-    
+
     const bookingExit = await Booking.find({
       $and: [{ userId: userId }, { serviceId: serviceid }],
     });
@@ -31,30 +35,29 @@ export const createReview = async (data: ReviewDto, paramsData: any, userId: any
 };
 
 //Todo : Get Review
-export const getReview = async (data : any) => {
+export const getReview = async (data: any) => {
   try {
-       const{ serviceid } = data;
-       console.log(data);
-       
-      const getReview = await Review.find({serviceId : serviceid})
+    const { serviceid } = data;
+    console.log(data);
+
+    const getReview = await Review.find({ serviceId: serviceid })
       .populate({
-        path : "serviceId",
-       // select : "setPrice pricePer itemPhoto -_id", 
-        populate : [
-          {path : "titleId", select : "name -_id"},
-          {path : "categoryId", select : "name -_id"}
-        ]
+        path: "serviceId",
+        // select : "setPrice pricePer itemPhoto -_id",
+        populate: [
+          { path: "titleId", select: "name -_id" },
+          { path: "categoryId", select: "name -_id" },
+        ],
       })
       .populate("userId", "firstName lastName -_id")
-      .select('-_id -__v');
+      .select("-_id -__v");
     //  console.log(getReview)
-      if(!getReview)
-      {
-        return false;
-      }
+    if (!getReview) {
+      return false;
+    }
 
-      return getReview;
+    return getReview;
   } catch (error) {
     return { message: "Something wrong" };
   }
-}
+};

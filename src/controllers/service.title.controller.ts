@@ -8,8 +8,7 @@ export const titleController = async (
   try {
     console.log(req.body);
     console.log("hiiiiiiiii");
-    
-    
+
     const titleIn = await titleService(req.body);
 
     if (titleIn) {

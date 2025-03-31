@@ -9,9 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.getAllSale = exports.postSale = void 0;
 const sale_category_model_1 = require("../models/sale.category.model");
 const sale_model_1 = require("./../models/sale.model");
+=======
+exports.getSaleService = exports.getUpdatedSale = exports.getAllSale = exports.postSale = void 0;
+const sale_category_model_1 = require("../models/sale.category.model");
+const sale_model_1 = require("./../models/sale.model");
+const sale_title_model_1 = require("../models/sale.title.model");
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 const postSale = (saleInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const saleExistWithUser = yield sale_model_1.saleModel.find({ u_id: saleInfo.u_id });
     const filterByCategory = saleExistWithUser.filter((ele) => String(ele.c_id) === saleInfo.c_id);
@@ -50,3 +57,41 @@ const getAllSale = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllSale = getAllSale;
+<<<<<<< HEAD
+=======
+const getUpdatedSale = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updatedSale = yield sale_model_1.saleModel.findByIdAndUpdate(id, data);
+        if (!updatedSale) {
+            return { status: 404, message: "sale not found" };
+        }
+        console.log(updatedSale);
+        return { status: 200, message: "updated successfully" };
+    }
+    catch (error) {
+        return { status: 5000, message: "Internal server error" };
+    }
+});
+exports.getUpdatedSale = getUpdatedSale;
+const getSaleService = (title) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const getTitle = yield sale_title_model_1.titleModel.findOne({
+            tName: { $regex: title.trim(), $options: "i" },
+        });
+        console.log(getTitle);
+        if (!getTitle) {
+            return { status: 404, message: "sale not exist" };
+        }
+        const titleId = getTitle === null || getTitle === void 0 ? void 0 : getTitle._id;
+        const getSales = yield sale_model_1.saleModel.find({ t_id: titleId });
+        if (getSales.length == 0) {
+            return { status: 404, message: "sale not exist" };
+        }
+        return { status: 200, message: "success", data: getSales };
+    }
+    catch (error) {
+        return { status: 500, message: "Internal Server Error" };
+    }
+});
+exports.getSaleService = getSaleService;
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

@@ -25,15 +25,15 @@ export const registerUser = async (data: SignUpDto) => {
     if (userExit) {
       return false;
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(data.password, 10);
     const newUser = new User({
-      profilePhoto,
-      lastName,
-      firstName,
-      phoneNumber,
-      emailAddress,
+      profilePhoto : data.profilePhoto,
+      lastName : data.lastName,
+      firstName : data.firstName,
+      phoneNumber : data.phoneNumber,
+      emailAddress : data.emailAddress,
       password: hashedPassword,
-      termsCondition,
+      termsCondition : data.termsCondition,
     });
 
     const saveUser = await newUser.save();
@@ -48,10 +48,12 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 if (!JWT_SECRET) {
   new Error("JWT_SECRET is missing in the .env file");
 }
-
 export const signInService = async (data: LoginDto) => {
   try {
     const userExists = await User.findOne({ emailAddress: data.emailAddress });
+
+    console.log(userExists);
+    
 
     if (!userExists) {
       return { success: false, message: "User not found" };

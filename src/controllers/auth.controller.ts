@@ -24,8 +24,11 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
 export const signIn = async (req: Request, res: Response): Promise<any> => {
   try {
     const logiData = req.body;
+    console.log(logiData);
 
     const login = await signInService(logiData);
+    console.log(login);
+
     if (!login) {
       return res.status(404).json({ message: "User not found" });
     }

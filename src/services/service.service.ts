@@ -2,9 +2,10 @@ import { Category } from "../models/service.category.model";
 import { ServiceDto } from "../dtos/service.dto";
 import { Service } from "../models/service.model";
 import { IService } from "../interfaces/service.interface";
+import { titleModel } from "../models/sale.title.model";
 
 //Todo : Post Service
-export const createService = async (data: ServiceDto, userId : any) => {
+export const createService = async (data: ServiceDto, userId: any) => {
   try {
     const categoryExit = await Category.findOne({ name: data.categoryId });
     if (categoryExit) {

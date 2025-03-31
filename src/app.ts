@@ -18,10 +18,10 @@ const app = express();
 
 app.use(express.json());
 
-const URL = process.env.MONGO_URL as string;
+const URI = process.env.MONGO_URL as string;
 const PORT = process.env.PORT || 1000;
 mongoose
-  .connect(URL)
+  .connect(URI)
   .then(() => {
     console.log("database connect successfully");
     app.listen(PORT, () => {
@@ -42,3 +42,9 @@ app.use("/api/sale/category", saleCategoryRoute);
 app.use("/api/sale", saleRouter);
 app.use("/api/sale/booking", saleBookingRouter);
 app.use("/api/sale/review", saleReviewRouter);
+
+app.use("/api/service/title", serviceTitleRoute);
+app.use("/api/service/category", serviceCategoryRoute);
+app.use("/api/service", serviceRoute);
+app.use("/api/service/booking", serviceBookingRoute);
+app.use("/api/service/review", serviceReviewRoute);

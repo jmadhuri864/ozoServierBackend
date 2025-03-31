@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
-import { AuthRequest } from "../middlewares/auth.middleware";
-import { CreateReview, getAllReviewService } from "../services/sale.review.service";
+import {  AuthRequest } from "../middlewares/auth.middleware";
+import {
+  CreateReview,
+  getAllReviewService,
+} from "../services/sale.review.service";
 export const giveReview = async (req: AuthRequest, res: Response) => {
   const u_id = req.user._id;
   const review = await CreateReview(req.body, u_id);

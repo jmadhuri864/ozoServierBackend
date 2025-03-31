@@ -10,4 +10,8 @@ const sale_title_dto_1 = require("../dtos/sale.title.dto");
 const validateDto_middleware_1 = require("../middlewares/validateDto.middleware");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
 const router = (0, express_1.default)();
+<<<<<<< HEAD
 exports.saleTitleRoute = router.post('/createTitle', (0, validateDto_middleware_1.validateDto)(sale_title_dto_1.CreateTitleDto), auth_middleware_1.authenticateUser, sale_title_controller_1.createTitle);
+=======
+exports.saleTitleRoute = router.post("/createTitle", (0, validateDto_middleware_1.validateDto)(sale_title_dto_1.CreateTitleDto), auth_middleware_1.authenticateUser, sale_title_controller_1.createTitle);
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

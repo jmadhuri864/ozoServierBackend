@@ -14,6 +14,10 @@ const categorySchema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Title",
         required: true,
+<<<<<<< HEAD
     }
+=======
+    },
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 });
 exports.categoryModel = mongoose_1.default.model("SaleCategory", categorySchema);

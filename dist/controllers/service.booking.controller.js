@@ -37,7 +37,11 @@ const getAllBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         return res.status(200).json(result);
     }
+<<<<<<< HEAD
     catch (error) {
     }
+=======
+    catch (error) { }
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 });
 exports.getAllBooking = getAllBooking;

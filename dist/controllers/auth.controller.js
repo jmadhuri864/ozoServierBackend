@@ -9,9 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.logout = exports.signIn = exports.signUp = void 0;
 const auth_service_1 = require("../services/auth.service");
 //Todo : SignUp Controller
+=======
+exports.signIn = exports.signUp = void 0;
+const auth_service_1 = require("../services/auth.service");
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = req.body;
@@ -30,11 +35,20 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signUp = signUp;
+<<<<<<< HEAD
 //Todo : SignIn Controller
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const logiData = req.body;
         const login = yield (0, auth_service_1.signInService)(logiData);
+=======
+const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const logiData = req.body;
+        console.log(logiData);
+        const login = yield (0, auth_service_1.signInService)(logiData);
+        console.log(login);
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
         if (!login) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -45,6 +59,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signIn = signIn;
+<<<<<<< HEAD
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -60,3 +75,17 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.logout = logout;
+=======
+// export const logOut=async(req:any,res:any)=>{
+//   try
+//   {
+//     const token = req.headers.authorization?.split(" ")[1];
+//     const login = await blackListeToken(token,3600);
+//     return res.status(200).json({ message: "Logged out successfully" });
+//   }
+//   catch(error)
+//   {
+//     return res.status(500).json({ message: "Server Error" });
+//   }
+// }
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

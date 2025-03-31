@@ -9,12 +9,12 @@ const saleSchema = new mongoose_1.default.Schema({
     u_id: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true,
     },
     t_id: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Title",
-        required: true
+        required: true,
     },
     c_id: {
         type: mongoose_1.default.Schema.Types.ObjectId,

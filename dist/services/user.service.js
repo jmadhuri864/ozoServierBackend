@@ -9,24 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.categoryInsert = void 0;
-const service_category_service_1 = require("../services/service.category.service");
-const categoryInsert = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.updateUserService = void 0;
+const user_model_1 = require("../models/user.model");
+const updateUserService = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const categoryIn = yield (0, service_category_service_1.createCategory)(req.body);
-        if (categoryIn) {
-            return res.status(201).json({ message: "Category insert successfullly" });
+        if (data.password) {
+            return {
+                status: 400,
+                message: "you can not update password fro here you have to reset it",
+            };
         }
-<<<<<<< HEAD
-        return res.status(409).json({ message: "Title or category name already exit" });
-=======
-        return res
-            .status(409)
-            .json({ message: "Title or category name already exit" });
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+        const updatedUser = yield user_model_1.User.findByIdAndUpdate(id, data, { new: true });
+        console.log("hiiiiiiiiiiiiiii");
+        console.log(updatedUser);
+        return { status: 200, message: "updated successfully" };
     }
     catch (error) {
-        res.status(500).json({ message: "something Wrong" });
+        return { status: 500, message: "Internal server error" };
     }
 });
-exports.categoryInsert = categoryInsert;
+exports.updateUserService = updateUserService;

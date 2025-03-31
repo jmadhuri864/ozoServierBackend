@@ -9,24 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.categoryInsert = void 0;
-const service_category_service_1 = require("../services/service.category.service");
-const categoryInsert = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.updateUser = void 0;
+const user_service_1 = require("../services/user.service");
+const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const categoryIn = yield (0, service_category_service_1.createCategory)(req.body);
-        if (categoryIn) {
-            return res.status(201).json({ message: "Category insert successfullly" });
-        }
-<<<<<<< HEAD
-        return res.status(409).json({ message: "Title or category name already exit" });
-=======
-        return res
-            .status(409)
-            .json({ message: "Title or category name already exit" });
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+        const id = req.user.userId;
+        console.log(id);
+        const updatedData = req.body;
+        const updatedUser = yield (0, user_service_1.updateUserService)(id, updatedData);
+        res.status(updatedUser.status).json({ message: updatedUser.message });
     }
     catch (error) {
-        res.status(500).json({ message: "something Wrong" });
+        res.status(500).json({ message: "Internal server error" });
     }
 });
-exports.categoryInsert = categoryInsert;
+exports.updateUser = updateUser;

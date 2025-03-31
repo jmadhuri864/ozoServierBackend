@@ -22,7 +22,12 @@ const bookingSchema = new mongoose_1.default.Schema({
     },
     status: {
         type: [String],
+<<<<<<< HEAD
         enum: ["Confirmed", "Completed", "Declaim"],
     }
+=======
+        enum: ["Confirmed", "Completed", "Declained"],
+    },
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 });
 exports.bookingModel = mongoose_1.default.model("SaleBooking", bookingSchema);

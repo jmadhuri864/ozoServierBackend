@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { postSale, getAllSale, deleteSale } from "../services/sale.service";
+import { postSale, getAllSale, deleteSale, getSaleService, getUpdatedSale } from "../services/sale.service";
 import { CreateSaleDto } from "../dtos/sale.dto";
+import { AuthRequest } from "../middlewares/auth.middleware";
 export const createSale = async (req: Request, res: Response): Promise<any> => {
   try {
     const saleInfo: CreateSaleDto = req.body;
@@ -37,3 +38,23 @@ export const deleteController = async(req: Request, res: Response) : Promise<any
   }
 }
 
+export const getSale = async (req: Request, res: Response) => {
+  try {
+    const title = req.params.name;
+    const sale = await getSaleService(title);
+    res.status(sale.status).json({ message: sale.message ,data:sale.data});
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const updateSale = async (req: AuthRequest, res: Response) => {
+  try {
+    const id = req.params.userId;
+    const data = req.body;
+    const updatedSale = await getUpdatedSale(id, data);
+    res.status(updatedSale.status).json({ message: updatedSale.message });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server error" });
+  }
+};

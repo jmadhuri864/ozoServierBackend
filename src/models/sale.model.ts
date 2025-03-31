@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 import { titleModel } from "./sale.title.model";
 import { categoryModel } from "./sale.category.model";
@@ -9,13 +8,13 @@ const saleSchema = new mongoose.Schema<Sale>({
   u_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
-      },
+    required: true,
+  },
   t_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Title",
-    required: true
-      },
+    required: true,
+  },
   c_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
@@ -45,5 +44,4 @@ const saleSchema = new mongoose.Schema<Sale>({
   },
 });
 
-
-export const saleModel= mongoose.model<Sale>("Sale", saleSchema);
+export const saleModel = mongoose.model<Sale>("Sale", saleSchema);
