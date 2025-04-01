@@ -19,7 +19,6 @@ const validateDto = (validateDto) => (req, res, next) => __awaiter(void 0, void 
     if (errors.length > 0) {
         return res.status(400).json({ message: "Validation failed" });
     }
-    //  console.log(logiData);
     req.body = logiData;
     next();
 });

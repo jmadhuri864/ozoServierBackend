@@ -12,29 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateUser = void 0;
+exports.authMiddleware = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-//import { isBlackListed } from "../services/auth.service";
+const blacklist_model_1 = require("../models/blacklist.model");
 dotenv_1.default.config();
-const authenticateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const authHeader = req.header("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({ message: "Authorization token is required" });
     }
     const token = authHeader.split(" ")[1];
     try {
-        // const blackListed=await isBlackListed(token);
-        // if (blackListed) {
-        //     return res.status(401).json({ message: "Unauthorized: Token is blacklisted" });
-        // }
-        const decode = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        req.user = decode;
-        //  console.log(req.user);
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const blacklisted = yield blacklist_model_1.Blacklist.findOne({ token });
+        if (blacklisted) {
+            return res
+                .status(401)
+                .json({ message: "Token blacklisted. Please log in again." });
+        }
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
         next();
     }
     catch (error) {
-        return res.status(403).json({ message: "Invalid token" });
+        return res.status(401).json({ message: "Invalid token" });
     }
 });
-exports.authenticateUser = authenticateUser;
+exports.authMiddleware = authMiddleware;

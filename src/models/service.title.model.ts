@@ -8,4 +8,4 @@ const titleSchema = new mongoose.Schema<ITitle>(
   { timestamps: true }
 );
 
-export const Title = mongoose.model<ITitle>("ServiceTitle", titleSchema);
+export const Title = mongoose.model<ITitle>('ServiceTitle', titleSchema);

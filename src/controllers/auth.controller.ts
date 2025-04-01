@@ -1,10 +1,25 @@
 import { Request, Response } from "express";
-import { registerUser, signInService ,/*blackListeToken*/} from "../services/auth.service";
+//import { AuthService, logoutService, registerUser, resetPassword, sendOTP, signInService, verifyOTP } from "../services/auth.service";
+import { ResetPasswordDto, SendOtpDto, VerifyOtpDto } from "../dtos/auth.dto";
+import { validate } from "class-validator";
+import { inject, injectable } from "inversify";
+import { IAuthControllerInterface } from "../interfaces/auth.interface";
+import { AuthService } from "../services/auth.service";
 
-export const signUp = async (req: Request, res: Response): Promise<any> => {
+//Todo : SignUp Controller
+@injectable()
+export class AuthController implements IAuthControllerInterface{
+
+  private auth:AuthService;
+constructor(@inject(AuthService) auth:AuthService)
+{
+  this.auth=auth;
+}
+
+/*export const */signUp = async (req: Request, res: Response): Promise<any> => {
   try {
     const userData = req.body;
-    const signUp = await registerUser(userData);
+    const signUp = await this.auth.registerUser(userData);
     if (signUp) {
       return res.status(201).json({ message: "Registration successfully" });
     } else {
@@ -17,12 +32,13 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const signIn = async (req: Request, res: Response): Promise<any> => {
+//Todo : SignIn Controller
+/*export const */ signIn = async (req: Request, res: Response): Promise<any> => {
   try {
     const logiData = req.body;
     console.log(logiData);
 
-    const login = await signInService(logiData);
+    const login = await this.auth.signInService(logiData);
     console.log(login);
 
     if (!login) {
@@ -35,17 +51,61 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-// export const logOut=async(req:any,res:any)=>{
-//   try
-//   {
-    
-//     const token = req.headers.authorization?.split(" ")[1];
-//     const login = await blackListeToken(token,3600);
-//     return res.status(200).json({ message: "Logged out successfully" });
-//   }
-//   catch(error)
-//   {
-//     return res.status(500).json({ message: "Server Error" });
-//   }
+//Todo : Logout Controller
+/*export const */logout = async (req: Request, res: Response): Promise<any> => {
+  try {
+      const token = req.headers.authorization?.split(" ")[1];
+      if (!token) return res.status(400).json({ message: "Token required" });
 
-// }
+      const result = await this.auth.logoutService(token);
+      if (!result.success) return res.status(400).json({ message: result.message });
+
+      return res.json({ message: "Logged out successfully" });
+  } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+//Todo : SendOTP Controller
+/*export const */ sendOTPController = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        const dto = Object.assign(new SendOtpDto(), req.body);
+        const errors = await validate(dto);
+        if (errors.length) return res.status(400).json({ errors });
+
+        const message = await this.auth.sendOTP(dto.emailAddress);
+        res.json({ message });
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+//Todo : VerifyOTP Controller
+/*export const */ verifyOTPController = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        const dto = Object.assign(new VerifyOtpDto(), req.body);
+        const errors = await validate(dto);
+        if (errors.length) return res.status(400).json({ errors });
+
+        const message = await this.auth.verifyOTP(dto.emailAddress, dto.otp);
+        res.json({ message });
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+//Todo : ResetPassword Controller
+/*export const */ resetPasswordController = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        const dto = Object.assign(new ResetPasswordDto(), req.body);
+        const errors = await validate(dto);
+        if (errors.length) return res.status(400).json({ errors });
+
+        const message = await this.auth.resetPassword(dto.emailAddress, dto.otp, dto.newPassword);
+        res.json({ message });
+    } catch (error: any) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+}

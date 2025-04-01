@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSaleService = exports.getUpdatedSale = exports.getAllSale = exports.postSale = void 0;
+exports.getSaleService = exports.getUpdatedSale = exports.deleteSale = exports.getAllSale = exports.postSale = void 0;
 const sale_category_model_1 = require("../models/sale.category.model");
 const sale_model_1 = require("./../models/sale.model");
 const sale_title_model_1 = require("../models/sale.title.model");
@@ -51,6 +51,16 @@ const getAllSale = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllSale = getAllSale;
+//Todo : Delete Sale
+const deleteSale = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield sale_model_1.saleModel.findByIdAndDelete({ _id: data });
+    }
+    catch (error) {
+        return { status: 500, message: "Internal server error" };
+    }
+});
+exports.deleteSale = deleteSale;
 const getUpdatedSale = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updatedSale = yield sale_model_1.saleModel.findByIdAndUpdate(id, data);

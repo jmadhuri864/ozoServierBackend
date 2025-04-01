@@ -12,12 +12,11 @@ const sale_category_route_1 = __importDefault(require("./routes/sale.category.ro
 const sale_route_1 = __importDefault(require("./routes/sale.route"));
 const sale_booking_route_1 = require("./routes/sale.booking.route");
 const sale_review_route_1 = require("./routes/sale.review.route");
-const service_title_route_1 = __importDefault(require("./routes/service.title.route"));
 const service_booking_route_1 = __importDefault(require("./routes/service.booking.route"));
 const service_category_route_1 = __importDefault(require("./routes/service.category.route"));
 const service_review_route_1 = __importDefault(require("./routes/service.review.route"));
 const service_route_1 = __importDefault(require("./routes/service.route"));
-const user_route_1 = require("./routes/user.route");
+const service_title_route_1 = __importDefault(require("./routes/service.title.route"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -33,7 +32,11 @@ mongoose_1.default
 })
     .catch((err) => console.log("ERROR in database connection", err));
 app.use("/api/auth", auth_route_1.default);
-app.use("/api/user", user_route_1.userRuote);
+app.use("/api/service/title", service_title_route_1.default);
+app.use("/api/service/category", service_category_route_1.default);
+app.use("/api/service", service_route_1.default);
+app.use("/api/service/booking", service_booking_route_1.default);
+app.use("/api/service/review", service_review_route_1.default);
 app.use("/api/sale/title", sale_title_route_1.saleTitleRoute);
 app.use("/api/sale/category", sale_category_route_1.default);
 app.use("/api/sale", sale_route_1.default);

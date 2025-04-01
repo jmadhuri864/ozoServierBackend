@@ -3,21 +3,40 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
 import bcrypt from "bcryptjs";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
-import { logOutModel } from "../models/logOut.model";
+import { Blacklist } from "../models/blacklist.model";
+import { generateOTP } from "../utils/otp.util";
+import { sendMail } from "../utils/mail.util";
+import { IAuthServiceInterface } from "../interfaces/auth.interface";
+import { injectable } from "inversify";
 dotenv.config();
 
-//Todo :Regiser user
-export const registerUser = async (data: SignUpDto) => {
-  try {
+//Todo : Service for Register
+@injectable()
+export class AuthService implements IAuthServiceInterface{
+  constructor()
+  {
     
-    const userExit = await User.findOne({emailAddress : data.emailAddress});
+  }
+registerUser = async (data: SignUpDto) => {
+  try {
+    const {
+      profilePhoto,
+      lastName,
+      firstName,
+      phoneNumber,
+      emailAddress,
+      password,
+      termsCondition,
+    } = data;
+
+    const userExit = await User.findOne({ emailAddress });
     if (userExit) {
       return false;
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const newUser = new User({
       profilePhoto : data.profilePhoto,
-      lastName : data.LastName,
+      lastName : data.lastName,
       firstName : data.firstName,
       phoneNumber : data.phoneNumber,
       emailAddress : data.emailAddress,
@@ -32,12 +51,12 @@ export const registerUser = async (data: SignUpDto) => {
   }
 };
 
-//Todo : Service for
-const JWT_SECRET = process.env.JWT_SECRET as string;
-if (!JWT_SECRET) {
-   new Error("JWT_SECRET is missing in the .env file");
-}
-export const signInService = async (data: LoginDto) => {
+//Todo : Service for SignIn
+ JWT_SECRET = process.env.JWT_SECRET as string;
+// if (!JWT_SECRET) {
+//   new Error("JWT_SECRET is missing in the .env file");
+// }
+signInService = async (data: LoginDto) => {
   try {
     const userExists = await User.findOne({ emailAddress: data.emailAddress });
 
@@ -53,25 +72,84 @@ export const signInService = async (data: LoginDto) => {
       return { success: false, message: "Invalid password" };
     }
 
-    console.log(JWT_SECRET);
-    const token = jwt.sign({ userId: userExists._id },JWT_SECRET , { expiresIn: "1h" });
+    console.log(this.JWT_SECRET);
+    const token = jwt.sign({ userId: userExists._id }, this.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     return { success: true, message: "Login successful", token };
-  
   } catch (error) {
     return { success: false, message: "Failed to login" };
   }
 };
 
-// export const blackListeToken=async(token:string,time:number)=>{
+//Todo : Service for Logout
+logoutService = async (token: string) => {
+  try {
+    const decoded = jwt.decode(token) as { exp: number } | null;
+    if (!decoded || !decoded.exp) {
+      return { success: false, message: "Invalid token" };
+    }
 
-//   const expiresAt = new Date(Date.now() + time * 1000);
-//     await logOutModel.create({ token, expiresAt });
+    // Store token in DB until it expire
+    await Blacklist.create({ token, expiresAt: new Date(decoded.exp * 1000) });
 
-// }
+    return { success: true, message: "Logged out successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to logout" };
+  }
+};
 
-// export const isBlackListed= async(token:string)=>{
-//   const tokenExists = await logOutModel.findOne({ token });
-//     return !!tokenExists;  
+//Todo : Service for SendOTP
+sendOTP = async (emailAddress: string) => {
+  const user = await User.findOne({ emailAddress });
+  if (!user) throw new Error("User not found");
 
-// }
+  const otp = generateOTP();
+  user.otp = otp;
+  user.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+  await user.save();
+
+  await sendMail(
+    emailAddress,
+    "Your OTP Code",
+    `Your OTP is: ${otp}. It is valid for 10 minutes.`
+  );
+
+  return "OTP sent successfully";
+};
+
+//Todo : Service for VerifyOTP
+verifyOTP = async (emailAddress: string, otp: string) => {
+  const user = await User.findOne({ emailAddress });
+
+  if (!user || user.otp !== otp || new Date() > user.otpExpires!) {
+    throw new Error("Invalid or expired OTP");
+  }
+
+  return "OTP verified successfully";
+};
+
+//Todo : Service for ResetPassword
+resetPassword = async (
+  emailAddress: string,
+  otp: string,
+  newPassword: string
+) => {
+  const user = await User.findOne({ emailAddress });
+
+  if (!user || user.otp !== otp || new Date() > user.otpExpires!) {
+    throw new Error("Invalid or expired OTP");
+  }
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  user.otp = null;
+  user.otpExpires = null;
+
+  await user.save();
+
+  return "Password updated successfully";
+};
+
+}

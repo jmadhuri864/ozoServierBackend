@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getService = exports.getAllController = exports.updateController = exports.createController = void 0;
+exports.deleteController = exports.getAllController = exports.updateController = exports.createController = void 0;
 const service_service_1 = require("../services/service.service");
 //Todo : Controller for Post Service
 const createController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,21 +50,23 @@ const getAllController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (!result.success) {
             return res.status(500).json(result);
         }
-        return res.status(200).json(result);
     }
     catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
 exports.getAllController = getAllController;
-const getService = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+//Todo : Controller for Delete Service
+const deleteController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const title = req.params.name;
-        const service = yield (0, service_service_1.getServiceService)(title);
-        res.status(service.status).json({ message: service.message, data: service.data });
+        const result = yield (0, service_service_1.deleteService)(req.params.id);
+        if (!result) {
+            return res.status(201).json({ message: "Service not found" });
+        }
+        return res.status(200).json({ message: "Service deleted successfully" });
     }
     catch (error) {
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
-exports.getService = getService;
+exports.deleteController = deleteController;

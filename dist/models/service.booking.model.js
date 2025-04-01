@@ -31,4 +31,4 @@ const bookingSchema = new mongoose_1.default.Schema({
         default: "Pending",
     },
 });
-exports.Booking = mongoose_1.default.model("ServiceBooking", bookingSchema);
+exports.Booking = mongoose_1.default.model('ServiceBooking', bookingSchema);

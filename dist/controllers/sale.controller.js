@@ -9,9 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSale = exports.updateSale = exports.getAll = exports.createSale = void 0;
+exports.updateSale = exports.getSale = exports.deleteController = exports.getAll = exports.createSale = void 0;
 const sale_service_1 = require("../services/sale.service");
-const sale_service_2 = require("../services/sale.service");
 const createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const saleInfo = req.body;
@@ -32,18 +31,20 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         .json({ message: allSale.message, allSale: allSale.data });
 });
 exports.getAll = getAll;
-const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+//Todo : Controller for Delete Sale
+const deleteController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.userId;
-        const data = req.body;
-        const updatedSale = yield (0, sale_service_2.getUpdatedSale)(id, data);
-        res.status(updatedSale.status).json({ message: updatedSale.message });
+        const result = yield (0, sale_service_1.deleteSale)(req.params.id);
+        if (!result) {
+            return res.status(201).json({ message: "Sale not found" });
+        }
+        return res.status(200).json({ message: "Sale deleted successfully" });
     }
     catch (error) {
-        res.status(500).json({ message: "Internal Server error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
-exports.updateSale = updateSale;
+exports.deleteController = deleteController;
 const getSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const title = req.params.name;
@@ -55,3 +56,15 @@ const getSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getSale = getSale;
+const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.userId;
+        const data = req.body;
+        const updatedSale = yield (0, sale_service_1.getUpdatedSale)(id, data);
+        res.status(updatedSale.status).json({ message: updatedSale.message });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal Server error" });
+    }
+});
+exports.updateSale = updateSale;

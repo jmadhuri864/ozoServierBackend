@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { User } from "./user.model";
 import { titleModel } from "./sale.title.model";
 import { categoryModel } from "./sale.category.model";
 import { Sale } from "../interfaces/sale.interface";

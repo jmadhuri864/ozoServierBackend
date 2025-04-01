@@ -24,4 +24,4 @@ const reviewSchema = new mongoose_1.default.Schema({
         type: String,
     },
 });
-exports.Review = mongoose_1.default.model("ServiceReview", reviewSchema);
+exports.Review = mongoose_1.default.model('ServiceReview', reviewSchema);

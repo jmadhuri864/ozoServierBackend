@@ -10,5 +10,5 @@ const validateDto_middleware_1 = require("../middlewares/validateDto.middleware"
 const sale_booking_dto_1 = require("../dtos/sale.booking.dto");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
 exports.saleBookingRouter = express_1.default.Router();
-exports.saleBookingRouter.post("/makeBooking", auth_middleware_1.authenticateUser, (0, validateDto_middleware_1.validateDto)(sale_booking_dto_1.CreateBookingDto), sale_booking_controller_1.makeBooking);
-exports.saleBookingRouter.get("/getallbooking", auth_middleware_1.authenticateUser, sale_booking_controller_1.getAllBooking);
+exports.saleBookingRouter.post("/makeBooking", auth_middleware_1.authMiddleware, (0, validateDto_middleware_1.validateDto)(sale_booking_dto_1.CreateBookingDto), sale_booking_controller_1.makeBooking);
+exports.saleBookingRouter.get("/getallbooking", auth_middleware_1.authMiddleware, sale_booking_controller_1.getAllBooking);

@@ -12,8 +12,7 @@ export const validateDto =
     if (errors.length > 0) {
       return res.status(400).json({ message: "Validation failed" });
     }
-    //  console.log(logiData);
-
-    req.body = logiData;
+    
+   req.body = logiData;
     next();
   };

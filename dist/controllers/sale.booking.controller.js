@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllBooking = exports.makeBooking = void 0;
 const sale_booking_service_1 = require("../services/sale.booking.service");
+//Todo : Post Bookig Controller
 const makeBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const u_id = req.user._id;
     console.log(u_id);
@@ -19,10 +20,9 @@ const makeBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.status(booking.status).json(booking.message);
 });
 exports.makeBooking = makeBooking;
+//Todo : Get All Booking controller
 const getAllBooking = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allBooking = yield (0, sale_booking_service_1.getAllBookingService)();
-    res
-        .status(allBooking.status)
-        .json({ message: allBooking.message, data: allBooking.data });
+    res.status(allBooking.status).json({ message: allBooking.message, data: allBooking.data });
 });
 exports.getAllBooking = getAllBooking;

@@ -9,10 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getServiceService = exports.getAllService = exports.updateService = exports.createService = void 0;
+exports.searchService = exports.deleteService = exports.getAllService = exports.updateService = exports.createService = void 0;
 const service_category_model_1 = require("../models/service.category.model");
 const service_model_1 = require("../models/service.model");
-const sale_title_model_1 = require("../models/sale.title.model");
 //Todo : Post Service
 const createService = (data, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -86,24 +85,22 @@ const getAllService = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllService = getAllService;
-const getServiceService = (title) => __awaiter(void 0, void 0, void 0, function* () {
+//Todo : Delete Service
+const deleteService = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const getTitle = yield sale_title_model_1.titleModel.findOne({
-            tName: { $regex: title.trim(), $options: "i" },
-        });
-        console.log(getTitle);
-        if (!getTitle) {
-            return { status: 404, message: "sale not exist" };
-        }
-        const titleId = getTitle === null || getTitle === void 0 ? void 0 : getTitle._id;
-        const getSales = yield service_model_1.Service.find({ t_id: titleId });
-        if (getSales.length == 0) {
-            return { status: 404, message: "sale not exist" };
-        }
-        return { status: 200, message: "success", data: getSales };
+        return yield service_model_1.Service.findByIdAndDelete({ _id: data });
     }
     catch (error) {
-        return { status: 500, message: "Internal Server Error" };
+        return { status: 500, message: "Internal server error" };
     }
 });
-exports.getServiceService = getServiceService;
+exports.deleteService = deleteService;
+//Todo : Search Service
+const searchService = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield service_model_1.Service.find({ titleId: key });
+    }
+    catch (error) {
+    }
+});
+exports.searchService = searchService;

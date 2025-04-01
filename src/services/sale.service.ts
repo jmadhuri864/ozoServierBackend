@@ -2,14 +2,9 @@ import { Length } from 'class-validator';
 import { Sale } from "./../interfaces/sale.interface";
 import { categoryModel } from "../models/sale.category.model";
 import { saleModel } from "./../models/sale.model";
-import { Category } from "../interfaces/sale.category.interface";
-import { Title } from "../interfaces/sale.title.interface";
-import { User } from "../models/user.model";
-import { titleModel } from "../models/sale.title.model";
 import { CreateSaleDto } from "../dtos/sale.dto";
-import mongoose, { Mongoose, Types, Schema } from "mongoose";
-import { UpdateSaleDto } from "../dtos/sale.update.dto";
-import { title } from "process";
+import { titleModel } from '../models/sale.title.model';
+import { UpdateSaleDto } from '../dtos/sale.update.dto';
 
 export const postSale = async (saleInfo: CreateSaleDto) => {
   const saleExistWithUser = await saleModel.find({ u_id: saleInfo.u_id });
@@ -49,6 +44,17 @@ export const getAllSale = async () => {
     return { status: 500, message: "Internal server error" };
   }
 };
+
+//Todo : Delete Sale
+export const deleteSale = async(data:string) => {
+  try {
+    
+     return await saleModel.findByIdAndDelete({_id : data});
+
+  } catch (error) {
+    return { status: 500, message: "Internal server error" };
+  }
+}
 
 export const getUpdatedSale = async (id: any, data: UpdateSaleDto) => {
   try {

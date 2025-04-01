@@ -1,12 +1,8 @@
-import { Length } from "class-validator";
 
 import { CreateReviewDto } from "../dtos/sale.review.dto";
-import { authenticateUser, AuthRequest } from "../middlewares/auth.middleware";
-import { saleModel } from "../models/sale.model";
-import { User } from "../models/user.model";
+import { AuthRequest } from "../middlewares/auth.middleware";
 import { bookingModel } from "../models/sale.booking.model";
 import { reviewModel } from "../models/sale.review.model";
-import { resolveObjectURL } from "buffer";
 export const CreateReview = async (
   review: CreateReviewDto,
   u_id: AuthRequest
