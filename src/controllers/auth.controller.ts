@@ -6,8 +6,12 @@ import { validate } from "class-validator";
 //Todo : SignUp Controller
 export const signUp = async (req: Request, res: Response): Promise<any> => {
   try {
-    const userData = req.body;
-    const signUp = await registerUser(userData);
+    if (!req.file) {
+      return res.status(400).json({ message: "Profile photo is required" });
+  }
+
+    req.body.profilePhoto = req.file.path;
+    const signUp = await registerUser(req.body);
     if (signUp) {
       return res.status(201).json({ message: "Registration successfully" });
     } else {

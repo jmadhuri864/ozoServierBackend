@@ -9,12 +9,13 @@ const serviceSchema = new mongoose.Schema<IService>({
   },
   titleId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Title",
+    ref: "ServiceTitle",
     required: true,
+
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
+    ref: "ServiceCategory",
     required: true,
   },
   setPrice: {

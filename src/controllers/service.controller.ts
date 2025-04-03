@@ -1,3 +1,4 @@
+import { ParsedQs } from "qs";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import { createService, deleteService, getAllService, updateService } from "../services/service.service";
 import { Request, Response } from "express";
@@ -9,6 +10,7 @@ export const createController = async (
 ): Promise<any> => {
   try {
     const userId = req.user.userId;
+    req.body.item = req.file?.path;
     const serviceIn = await createService(req.body, userId);
 
     if (serviceIn) {
@@ -47,10 +49,12 @@ export const getAllController = async (
   res: Response
 ): Promise<any> => {
   try {
-    const result = await getAllService();
-    if (!result.success) {
+
+    const result = await getAllService(req.query);
+    if (!result) {
       return res.status(500).json(result);
     }
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({message : "Internal server error"})
   }
@@ -71,5 +75,6 @@ export const deleteController = async(req: Request, res: Response) : Promise<any
     return res.status(500).json({message : "Internal server error"})
   }
 }
+
 
 

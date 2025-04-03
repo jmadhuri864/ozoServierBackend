@@ -1,8 +1,7 @@
 import { Category } from "../models/service.category.model";
 import { ServiceDto } from "../dtos/service.dto";
 import { Service } from "../models/service.model";
-import { IService } from "../interfaces/service.interface";
-import { titleModel } from "../models/sale.title.model";
+
 
 //Todo : Post Service
 export const createService = async (data: ServiceDto, userId: any) => {
@@ -18,17 +17,15 @@ export const createService = async (data: ServiceDto, userId: any) => {
         return false;
       }
 
+      
       const categoryID = categoryExit._id;
       const titleID = categoryExit.title;
       const newService = new Service({
+        ...data,
         userId: userId,
-        titleId: titleID,
-        categoryId: categoryID,
-        setPrice: data.setPrice,
-        pricePer: data.pricePer,
-        availability: data.availability,
-        itemPhoto: data.itemPhoto,
-        address: data.address,
+        categoryId : categoryID,
+        titleId : titleID,
+        
       });
       const saveService = await newService.save();
       // console.log("New service saved:", saveService);
@@ -44,7 +41,7 @@ export const createService = async (data: ServiceDto, userId: any) => {
 };
 
 //Todo : Update Service
-export const updateService = async (data: ServiceDto, serviceID: any) => {
+export const updateService= async  (data: ServiceDto, serviceID: any) => {
   try {
     const updateService = await Service.findByIdAndUpdate(serviceID, data);
     if (!updateService) {
@@ -61,46 +58,39 @@ export const updateService = async (data: ServiceDto, serviceID: any) => {
 };
 
 //Todo : Get All Service
-export const getAllService = async (): Promise<{
-  success: boolean;
-  message: string;
-  data?: IService[];
-}> => {
+export const getAllService = async   (paramsQuery: any): Promise<any> => {
   try {
-    const services = await Service.find()
-      .populate("userId", "firstName lastName emailAddress")
-      .populate("titleId", "name")
-      .populate("categoryId", "name");
+    const { page, limit } = paramsQuery;
 
-    return {
-      success: true,
-      message: "Services fetched successfully",
-      data: services,
-    };
+    //  console.log(limit);
+
+    const pageData = Number(page) || 1;
+    const limitdata = Number(limit) || 2;
+    const skip = (pageData - 1) * limitdata;
+
+    //  console.log(`${pageData} ${limitdata}`);
+
+    const services = await Service.find()
+      .skip(skip)
+      .limit(limitdata)
+      .populate("categoryId", "name -_id")
+      .populate("titleId", "name -_id")
+      .populate("userId", "lastName firstName emailAddress -_id");
+
+    //  console.log(services);
+
+    return { services, dataLength: services.length };
   } catch (error) {
     return { success: false, message: "Internal Server Error" };
   }
 };
 
 //Todo : Delete Service
-export const deleteService = async(data:string) => {
+export const deleteService = async(data: string) => {
   try {
-    
-     return await Service.findByIdAndDelete({_id : data});
-
+    return await Service.findByIdAndDelete({ _id: data });
   } catch (error) {
     return { status: 500, message: "Internal server error" };
   }
-}
+};
 
-//Todo : Search Service
-
-export const searchService = async (key : string) => {
-  try {
-    
-    return await Service.find({titleId : key})
-
-  } catch (error) {
-    
-  }
-}

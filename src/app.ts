@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoute from "./routes/auth.route";
@@ -30,6 +30,12 @@ mongoose
   })
   .catch((err: Error) => console.log("ERROR in database connection", err));
 
+
+
+  // app.use("/", (req, res) => {
+  //   res.status(200).send("Hello from ShriCoder07");
+  // })
+
   app.use("/api/auth", authRoute);
   app.use("/api/service/title", serviceTitleRoute);
   app.use("/api/service/category", serviceCategoryRoute);
@@ -42,9 +48,3 @@ app.use("/api/sale/category", saleCategoryRoute);
 app.use("/api/sale", saleRouter);
 app.use("/api/sale/booking", saleBookingRouter);
 app.use("/api/sale/review", saleReviewRouter);
-
-app.use("/api/service/title", serviceTitleRoute);
-app.use("/api/service/category", serviceCategoryRoute);
-app.use("/api/service", serviceRoute);
-app.use("/api/service/booking", serviceBookingRoute);
-app.use("/api/service/review", serviceReviewRoute);
