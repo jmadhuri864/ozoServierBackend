@@ -1,6 +1,5 @@
-import { Request,Response } from "express";
-import { LoginDto, SignUpDto } from "../dtos/auth.dto";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // export interface IAuthControllerInterface{
 //     signUp:(req: Request, res: Response) => Promise<any>;
 //     signIn:(req: Request, res: Response) => Promise<any>;
@@ -8,9 +7,7 @@ import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 //     sendOTPController:(req: Request, res: Response) => Promise<any>;
 //     verifyOTPController:(req: Request, res: Response) => Promise<any>;
 //     resetPasswordController:(req: Request, res: Response) => Promise<any>;
-
 // }
-
 // export interface IAuthServiceInterface{
 //     registerUser:(data:SignUpDto)=>Promise<any>;
 //     signInService:(data:LoginDto)=>Promise<any>;

@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {AuthRoute} from "./routes/auth.route";
 import { saleTitleRoute } from "./routes/sale.title.route";
 import saleCategoryRoute from "./routes/sale.category.route";
 import saleRouter from "./routes/sale.route";
@@ -12,7 +11,7 @@ import serviceCategoryRoute from "./routes/service.category.route";
 import serviceReviewRoute from "./routes/service.review.route";
 import serviceRoute from "./routes/service.route";
 import serviceTitleRoute from "./routes/service.title.route";
-import { container } from "./config/inversify.config";
+import authRoute from "./routes/auth.route";
 
 
 dotenv.config();
@@ -33,8 +32,12 @@ mongoose
   })
   .catch((err: Error) => console.log("ERROR in database connection", err));
 
-  const authRoutes = container.get(AuthRoute);
-  app.use("/api/auth", authRoutes.authRoute);
+  // app.use("/",(req,res)=>{
+  //   res.status(200).json({message:"welcome"})
+  // });
+
+  app.use("/uploads", express.static("uploads"));
+  app.use("/api/auth", authRoute);
   app.use("/api/service/title", serviceTitleRoute);
   app.use("/api/service/category", serviceCategoryRoute);
   app.use("/api/service", serviceRoute);

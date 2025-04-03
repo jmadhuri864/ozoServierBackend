@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { validate } from "class-validator";
+import { validate, Length } from 'class-validator';
 import { plainToInstance } from "class-transformer";
 
 export const validateDto =
@@ -7,8 +7,9 @@ export const validateDto =
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const logiData = plainToInstance(validateDto, req.body);
     const errors = await validate(logiData);
-    //  console.log(errors);
-
+    console.log("Validation Errors:", errors);
+    console.log(errors.length);
+    console.log("hi hello")
     if (errors.length > 0) {
       return res.status(400).json({ message: "Validation failed" });
     }

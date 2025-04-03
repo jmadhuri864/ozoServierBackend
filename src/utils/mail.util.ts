@@ -18,6 +18,8 @@ export const sendMail = async (to: string, subject: string, text: string) => {
             to,
             subject,
             text,
+            html : `<h2>Hello</h2>
+            <p>Thank you for registration</p>`,
         });
         console.log("Email sent to", to);
     } catch (error) {

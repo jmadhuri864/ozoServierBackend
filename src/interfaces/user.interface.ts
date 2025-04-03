@@ -10,7 +10,5 @@ export interface IUser extends Document {
     otpExpires ?: Date | null;
 }
 
-export interface IUserControllerInterface{
 
-}
 

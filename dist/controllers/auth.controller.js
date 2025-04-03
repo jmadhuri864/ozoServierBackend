@@ -17,7 +17,8 @@ const class_validator_1 = require("class-validator");
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userData = req.body;
-        const signUp = yield (0, auth_service_1.registerUser)(userData);
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+        const signUp = yield (0, auth_service_1.registerUser)(userData, imageUrl);
         if (signUp) {
             return res.status(201).json({ message: "Registration successfully" });
         }

@@ -22,16 +22,18 @@ const otp_util_1 = require("../utils/otp.util");
 const mail_util_1 = require("../utils/mail.util");
 dotenv_1.default.config();
 //Todo : Service for Register
-const registerUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const registerUser = (data, imageUrl) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { profilePhoto, lastName, firstName, phoneNumber, emailAddress, password, termsCondition, } = data;
+        const { 
+        // profilePhoto:imageUrl,
+        lastName, firstName, phoneNumber, emailAddress, password, termsCondition, } = data;
         const userExit = yield user_model_1.User.findOne({ emailAddress });
         if (userExit) {
             return false;
         }
         const hashedPassword = yield bcryptjs_1.default.hash(data.password, 10);
         const newUser = new user_model_1.User({
-            profilePhoto: data.profilePhoto,
+            profilePhoto: imageUrl,
             lastName: data.lastName,
             firstName: data.firstName,
             phoneNumber: data.phoneNumber,
@@ -49,9 +51,9 @@ const registerUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
 exports.registerUser = registerUser;
 //Todo : Service for SignIn
 const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-    new Error("JWT_SECRET is missing in the .env file");
-}
+// if (!JWT_SECRET) {
+//   new Error("JWT_SECRET is missing in the .env file");
+// }
 const signInService = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userExists = yield user_model_1.User.findOne({ emailAddress: data.emailAddress });

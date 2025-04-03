@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const auth_route_1 = __importDefault(require("./routes/auth.route"));
 const sale_title_route_1 = require("./routes/sale.title.route");
 const sale_category_route_1 = __importDefault(require("./routes/sale.category.route"));
 const sale_route_1 = __importDefault(require("./routes/sale.route"));
@@ -17,6 +16,7 @@ const service_category_route_1 = __importDefault(require("./routes/service.categ
 const service_review_route_1 = __importDefault(require("./routes/service.review.route"));
 const service_route_1 = __importDefault(require("./routes/service.route"));
 const service_title_route_1 = __importDefault(require("./routes/service.title.route"));
+const auth_route_1 = __importDefault(require("./routes/auth.route"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -31,6 +31,10 @@ mongoose_1.default
     });
 })
     .catch((err) => console.log("ERROR in database connection", err));
+app.use("/", (req, res) => {
+    res.status(200).json({ message: "welcome" });
+});
+app.use("/uploads", express_1.default.static("uploads"));
 app.use("/api/auth", auth_route_1.default);
 app.use("/api/service/title", service_title_route_1.default);
 app.use("/api/service/category", service_category_route_1.default);
