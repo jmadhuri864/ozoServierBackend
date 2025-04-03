@@ -6,6 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Title = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const titleSchema = new mongoose_1.default.Schema({
-    name: { type: String, required: true },
+<<<<<<< HEAD
+    name: { type: String, required: true }
 }, { timestamps: true });
 exports.Title = mongoose_1.default.model('ServiceTitle', titleSchema);
+=======
+    name: { type: String, required: true },
+}, { timestamps: true });
+<<<<<<< HEAD
+exports.Title = mongoose_1.default.model('ServiceTitle', titleSchema);
+=======
+exports.Title = mongoose_1.default.model("ServiceTitle", titleSchema);
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+>>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352

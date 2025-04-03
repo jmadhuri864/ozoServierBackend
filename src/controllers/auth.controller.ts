@@ -1,26 +1,17 @@
 import { Request, Response } from "express";
-import {  logoutService, registerUser, resetPassword, sendOTP, signInService, verifyOTP } from "../services/auth.service";
+import { logoutService, registerUser, resetPassword, sendOTP, signInService, verifyOTP } from "../services/auth.service";
 import { ResetPasswordDto, SendOtpDto, VerifyOtpDto } from "../dtos/auth.dto";
 import { validate } from "class-validator";
-import { inject, injectable } from "inversify";
-
-
 
 //Todo : SignUp Controller
-
 export const signUp = async (req: Request, res: Response): Promise<any> => {
   try {
-    if(!req.file)
-    {
-      console.log("empty image");
-      
-    }
-    const userData = req.body;
-    console.log(req.file);
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-  //  const imageUrl=req.file?.path;
-    console.log(imageUrl)
-    const signUp = await registerUser(userData,imageUrl);
+    if (!req.file) {
+      return res.status(400).json({ message: "Profile photo is required" });
+  }
+
+    req.body.profilePhoto = req.file.path;
+    const signUp = await registerUser(req.body);
     if (signUp) {
       return res.status(201).json({ message: "Registration successfully" });
     } else {
@@ -34,7 +25,7 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
 };
 
 //Todo : SignIn Controller
-export const  signIn = async (req: Request, res: Response): Promise<any> => {
+export const signIn = async (req: Request, res: Response): Promise<any> => {
   try {
     const logiData = req.body;
     console.log(logiData);
@@ -68,7 +59,7 @@ export const logout = async (req: Request, res: Response): Promise<any> => {
 };
 
 //Todo : SendOTP Controller
-export const  sendOTPController = async (req: Request, res: Response) : Promise<any> => {
+export const sendOTPController = async (req: Request, res: Response) : Promise<any> => {
     try {
         const dto = Object.assign(new SendOtpDto(), req.body);
         const errors = await validate(dto);
@@ -82,7 +73,7 @@ export const  sendOTPController = async (req: Request, res: Response) : Promise<
 };
 
 //Todo : VerifyOTP Controller
-export const  verifyOTPController = async (req: Request, res: Response) : Promise<any> => {
+export const verifyOTPController = async (req: Request, res: Response) : Promise<any> => {
     try {
         const dto = Object.assign(new VerifyOtpDto(), req.body);
         const errors = await validate(dto);
@@ -96,7 +87,7 @@ export const  verifyOTPController = async (req: Request, res: Response) : Promis
 };
 
 //Todo : ResetPassword Controller
-export const  resetPasswordController = async (req: Request, res: Response) : Promise<any> => {
+export const resetPasswordController = async (req: Request, res: Response) : Promise<any> => {
     try {
         const dto = Object.assign(new ResetPasswordDto(), req.body);
         const errors = await validate(dto);
@@ -108,5 +99,3 @@ export const  resetPasswordController = async (req: Request, res: Response) : Pr
         res.status(400).json({ error: error.message });
     }
 };
-
-

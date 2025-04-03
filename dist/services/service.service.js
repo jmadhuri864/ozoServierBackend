@@ -9,9 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.searchService = exports.deleteService = exports.getAllService = exports.updateService = exports.createService = void 0;
 const service_category_model_1 = require("../models/service.category.model");
 const service_model_1 = require("../models/service.model");
+=======
+<<<<<<< HEAD
+exports.getAllService = exports.updateService = exports.createService = void 0;
+const service_category_model_1 = require("../models/service.category.model");
+const service_model_1 = require("../models/service.model");
+=======
+exports.getServiceService = exports.getAllService = exports.updateService = exports.createService = void 0;
+const service_category_model_1 = require("../models/service.category.model");
+const service_model_1 = require("../models/service.model");
+const sale_title_model_1 = require("../models/sale.title.model");
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+>>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 //Todo : Post Service
 const createService = (data, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -85,8 +98,14 @@ const getAllService = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllService = getAllService;
+<<<<<<< HEAD
 //Todo : Delete Service
 const deleteService = (data) => __awaiter(void 0, void 0, void 0, function* () {
+=======
+<<<<<<< HEAD
+=======
+const getServiceService = (title) => __awaiter(void 0, void 0, void 0, function* () {
+>>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
     try {
         return yield service_model_1.Service.findByIdAndDelete({ _id: data });
     }
@@ -94,6 +113,7 @@ const deleteService = (data) => __awaiter(void 0, void 0, void 0, function* () {
         return { status: 500, message: "Internal server error" };
     }
 });
+<<<<<<< HEAD
 exports.deleteService = deleteService;
 //Todo : Search Service
 const searchService = (key) => __awaiter(void 0, void 0, void 0, function* () {
@@ -104,3 +124,7 @@ const searchService = (key) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.searchService = searchService;
+=======
+exports.getServiceService = getServiceService;
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+>>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352

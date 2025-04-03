@@ -1,6 +1,4 @@
-import { error } from "console";
-import redis, { Redis } from "ioredis";
-
+import { Redis } from "ioredis";
 const redisClient = new Redis({
     host: "127.0.0.1",
     port: 6379,

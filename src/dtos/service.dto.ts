@@ -1,4 +1,5 @@
 import {
+  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
   IsEnum,
@@ -32,11 +33,6 @@ export class ServiceDto {
   @IsEnum(["Morning : 9 To 12", "Afternoon : 2 To 4", "Evening : 4 To 6"])
   @IsOptional()
   availability?: string = "Morning : 9 To 12";
-
-  @IsArray()
-  @ArrayMinSize(1, { message: "At least one item photo is required" })
-  @IsString({ each: true })
-  itemPhoto!: string[];
 
   @IsString()
   @IsNotEmpty()

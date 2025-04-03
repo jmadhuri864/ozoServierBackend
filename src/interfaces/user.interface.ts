@@ -1,4 +1,4 @@
-export interface IUser extends Document {
+export interface IUser {
     profilePhoto : string;
     lastName : string;
     firstName : string;

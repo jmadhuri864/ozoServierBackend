@@ -5,48 +5,34 @@ import bcrypt from "bcryptjs";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 import { Blacklist } from "../models/blacklist.model";
 import { generateOTP } from "../utils/otp.util";
-import { sendMail } from "../utils/mail.util";
-import { injectable } from "inversify";
+import { sendMail, sendWelcomeEmail } from "../utils/mail.util";
 dotenv.config();
 
 //Todo : Service for Register
-
-export const registerUser = async (data: SignUpDto,imageUrl:any) => {
+export const registerUser = async (data: SignUpDto) => {
   try {
-
-    const {
-     // profilePhoto:imageUrl,
-      lastName,
-      firstName,
-      phoneNumber,
-      emailAddress,
-      password,
-      termsCondition,
-    } = data;
-
-    const userExit = await User.findOne({ emailAddress });
+    const userExit = await User.findOne({ emailAddress : data.emailAddress });
     if (userExit) {
       return false;
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const newUser = new User({
-      profilePhoto : imageUrl,
-      lastName : data.lastName,
-      firstName : data.firstName,
-      phoneNumber : data.phoneNumber,
-      emailAddress : data.emailAddress,
-      password: hashedPassword,
-      termsCondition : data.termsCondition,
+      ...data,
+        password: hashedPassword,
     });
+
+    await sendWelcomeEmail(newUser.emailAddress, newUser.firstName);
+
+    //return res.status(201).json({ message: "User registered successfully", user });
 
     const saveUser = await newUser.save();
 console.log();
 
-    await sendMail(
-      emailAddress,
-      "Registratioin Successfull",
-      `You are successfully register with email id ${emailAddress}`
-    );
+    // await sendMail(
+    //   emailAddress,
+    //   "Registratioin Successfull",
+    //   `You are successfully register with email id ${emailAddress}`
+    // );
 
     return true;
   } catch (error) {
@@ -55,10 +41,10 @@ console.log();
 };
 
 //Todo : Service for SignIn
- const JWT_SECRET = process.env.JWT_SECRET as string;
-// if (!JWT_SECRET) {
-//   new Error("JWT_SECRET is missing in the .env file");
-// }
+const JWT_SECRET = process.env.JWT_SECRET as string;
+if (!JWT_SECRET) {
+  new Error("JWT_SECRET is missing in the .env file");
+}
 export const signInService = async (data: LoginDto) => {
   try {
     const userExists = await User.findOne({ emailAddress: data.emailAddress });
@@ -119,7 +105,8 @@ export const sendOTP = async (emailAddress: string) => {
     "Your OTP Code",
     `Your OTP is: ${otp}. It is valid for 10 minutes.`
   );
-  return "OTP send successfully";
+
+  return "OTP sent successfully";
 };
 
 //Todo : Service for VerifyOTP
@@ -153,4 +140,3 @@ export const resetPassword = async (
 
   return "Password updated successfully";
 };
-

@@ -34,7 +34,11 @@ __decorate([
     __metadata("design:type", Date)
 ], CreateBookingDto.prototype, "bookingDataTime", void 0);
 __decorate([
+<<<<<<< HEAD
+    (0, class_validator_1.IsEnum)(["Confirmed", "Completed", "Declaim"]),
+=======
     (0, class_validator_1.IsEnum)(["Confirmed", "Completed", "Declained"]),
+>>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     (0, class_validator_1.IsString)({ each: true }),
     __metadata("design:type", String)
 ], CreateBookingDto.prototype, "status", void 0);
