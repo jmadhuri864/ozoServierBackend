@@ -1,3 +1,4 @@
 /node_modules
 .env
 logOut.model.ts
+/uploads

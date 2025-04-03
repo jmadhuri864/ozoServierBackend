@@ -3,11 +3,11 @@ import { validateDto } from "../middlewares/validateDto.middleware";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 import {  logout, resetPasswordController, sendOTPController, signIn, signUp, verifyOTPController } from "../controllers/auth.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
-import { sendOTP } from "../services/auth.service";
+import { upload } from "../config/multer.config";
 
 const authRoute = Router();
 
-authRoute.post("/signup", validateDto(SignUpDto), signUp);
+authRoute.post("/signup",upload.single("profilePhoto"), validateDto(SignUpDto), signUp);
 authRoute.post("/login", validateDto(LoginDto), signIn);
 authRoute.post("/logout", authMiddleware, logout);
 

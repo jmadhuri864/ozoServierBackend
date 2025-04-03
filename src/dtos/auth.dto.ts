@@ -1,16 +1,18 @@
+import { Transform } from "class-transformer";
 import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Length,
   Matches,
 } from "class-validator";
 
 export class SignUpDto {
-  @IsString({ message: "Invalid name formate" })
-  @IsNotEmpty()
-  profilePhoto!: string;
+  // @IsString({ message: "Invalid name formate" })
+  // @IsOptional()
+  // profilePhoto!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -27,6 +29,7 @@ export class SignUpDto {
 
   @IsEmail()
   @IsNotEmpty()
+  @IsEmail({}, { message: "Invalid email format. Please enter a valid email." })
   emailAddress!: string;
 
   @IsString()
@@ -34,6 +37,7 @@ export class SignUpDto {
   password!: string;
 
   @IsBoolean()
+  @Transform(({ value }) => value === "true")
   termsCondition!: boolean;
 }
 

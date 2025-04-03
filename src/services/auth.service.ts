@@ -5,36 +5,25 @@ import bcrypt from "bcryptjs";
 import { LoginDto, SignUpDto } from "../dtos/auth.dto";
 import { Blacklist } from "../models/blacklist.model";
 import { generateOTP } from "../utils/otp.util";
-import { sendMail } from "../utils/mail.util";
+import { sendMail, sendWelcomeEmail } from "../utils/mail.util";
 dotenv.config();
 
 //Todo : Service for Register
 export const registerUser = async (data: SignUpDto) => {
   try {
-    const {
-      profilePhoto,
-      lastName,
-      firstName,
-      phoneNumber,
-      emailAddress,
-      password,
-      termsCondition,
-    } = data;
-
-    const userExit = await User.findOne({ emailAddress });
+    const userExit = await User.findOne({ emailAddress : data.emailAddress });
     if (userExit) {
       return false;
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const newUser = new User({
-      profilePhoto : data.profilePhoto,
-      lastName : data.lastName,
-      firstName : data.firstName,
-      phoneNumber : data.phoneNumber,
-      emailAddress : data.emailAddress,
-      password: hashedPassword,
-      termsCondition : data.termsCondition,
+      ...data,
+        password: hashedPassword,
     });
+
+    await sendWelcomeEmail(newUser.emailAddress, newUser.firstName);
+
+    //return res.status(201).json({ message: "User registered successfully", user });
 
     const saveUser = await newUser.save();
     return true;
