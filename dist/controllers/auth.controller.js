@@ -9,84 +9,55 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
 exports.resetPasswordController = exports.verifyOTPController = exports.sendOTPController = exports.logout = exports.signIn = exports.signUp = void 0;
 const auth_service_1 = require("../services/auth.service");
 const auth_dto_1 = require("../dtos/auth.dto");
 const class_validator_1 = require("class-validator");
 //Todo : SignUp Controller
-=======
-<<<<<<< HEAD
-exports.logout = exports.signIn = exports.signUp = void 0;
-const auth_service_1 = require("../services/auth.service");
-//Todo : SignUp Controller
-=======
-exports.signIn = exports.signUp = void 0;
-const auth_service_1 = require("../services/auth.service");
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userData = req.body;
-        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-        const signUp = yield (0, auth_service_1.registerUser)(userData, imageUrl);
-        if (signUp) {
-            return res.status(201).json({ message: "Registration successfully" });
-        }
-        else {
-            return res
-                .status(400)
-                .json({ message: "User already exit please signin" });
-        }
+        //   console.log(req.body)
+        //   if (!req.file) {
+        //     return res.status(400).json({ message: "Profile photo is required" });
+        // }
+        //  req.body.profilePhoto = req.file.path;
+        const signUp = yield (0, auth_service_1.registerUser)(req.body);
+        return res.status(signUp.status).json({ message: signUp.message });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
 });
 exports.signUp = signUp;
-<<<<<<< HEAD
-//Todo : SignIn Controller
-=======
-<<<<<<< HEAD
 //Todo : SignIn Controller
 const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const logiData = req.body;
-        const login = yield (0, auth_service_1.signInService)(logiData);
-=======
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
-const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const logiData = req.body;
-        console.log(logiData);
-        const login = yield (0, auth_service_1.signInService)(logiData);
-        console.log(login);
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
-        if (!login) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        return res.status(200).json(login);
+        const loginData = req.body;
+        // console.log(loginData);
+        const login = yield (0, auth_service_1.signInService)(loginData);
+        //console.log(login);
+        // if (!login) {
+        //   return res.status(400).json({ message: "User not found" });
+        // }
+        return res.status(login.status).json({ message: login.message, token: login.token });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
 });
 exports.signIn = signIn;
-<<<<<<< HEAD
 //Todo : Logout Controller
-=======
-<<<<<<< HEAD
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
-<<<<<<< HEAD
-        if (!token)
+        if (!token) {
             return res.status(400).json({ message: "Token required" });
+        }
         const result = yield (0, auth_service_1.logoutService)(token);
-        if (!result.success)
+        if (!result.success) {
             return res.status(400).json({ message: result.message });
+        }
         return res.json({ message: "Logged out successfully" });
     }
     catch (error) {
@@ -139,30 +110,3 @@ const resetPasswordController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.resetPasswordController = resetPasswordController;
-=======
-        if (!token) {
-            return res.status(400).json({ message: "Token missing" });
-        }
-        const result = yield (0, auth_service_1.logoutService)(token);
-        return res.status(200).json(result);
-    }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
-exports.logout = logout;
-=======
-// export const logOut=async(req:any,res:any)=>{
-//   try
-//   {
-//     const token = req.headers.authorization?.split(" ")[1];
-//     const login = await blackListeToken(token,3600);
-//     return res.status(200).json({ message: "Logged out successfully" });
-//   }
-//   catch(error)
-//   {
-//     return res.status(500).json({ message: "Server Error" });
-//   }
-// }
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352

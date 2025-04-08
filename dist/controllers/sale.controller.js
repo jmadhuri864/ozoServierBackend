@@ -9,20 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
 exports.updateSale = exports.getSale = exports.deleteController = exports.getAll = exports.createSale = void 0;
-=======
-<<<<<<< HEAD
-exports.getAll = exports.createSale = void 0;
-=======
-exports.getSale = exports.updateSale = exports.getAll = exports.createSale = void 0;
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 const sale_service_1 = require("../services/sale.service");
 const createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const saleInfo = req.body;
-        const sale = yield (0, sale_service_1.postSale)(saleInfo);
+        if (!req.file) {
+            return res.status(400).json({ message: "item image is  is required" });
+        }
+        req.body = req.file.path;
+        const sale = yield (0, sale_service_1.postSale)(req.body);
         console.log(sale);
         return res.status(sale.status).json(sale.message);
     }
@@ -39,14 +35,8 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         .json({ message: allSale.message, allSale: allSale.data });
 });
 exports.getAll = getAll;
-<<<<<<< HEAD
 //Todo : Controller for Delete Sale
 const deleteController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-=======
-<<<<<<< HEAD
-=======
-const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
     try {
         const result = yield (0, sale_service_1.deleteSale)(req.params.id);
         if (!result) {
@@ -70,7 +60,6 @@ const getSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getSale = getSale;
-<<<<<<< HEAD
 const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.userId;
@@ -83,6 +72,3 @@ const updateSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.updateSale = updateSale;
-=======
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352

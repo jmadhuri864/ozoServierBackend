@@ -8,15 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
     profilePhoto: {
         type: String,
-<<<<<<< HEAD
-        required: true
-=======
-<<<<<<< HEAD
-        required: true
-=======
-        required: true,
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
+        required: /* true*/ false
     },
     lastName: {
         type: String,
@@ -27,25 +19,12 @@ const userSchema = new mongoose_1.default.Schema({
         required: true
     },
     phoneNumber: {
-<<<<<<< HEAD
         type: String,
         required: true
     },
     emailAddress: {
         type: String,
         required: true
-=======
-        type: String,
-        required: true
-    },
-    emailAddress: {
-        type: String,
-<<<<<<< HEAD
-        required: true
-=======
-        required: true,
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
     },
     password: {
         type: String,
@@ -53,7 +32,6 @@ const userSchema = new mongoose_1.default.Schema({
     },
     termsCondition: {
         type: Boolean,
-<<<<<<< HEAD
         required: true
     },
     otp: {
@@ -64,14 +42,5 @@ const userSchema = new mongoose_1.default.Schema({
         type: Date,
         default: null
     }
-=======
-<<<<<<< HEAD
-        required: true
-    }
-=======
-        required: true,
-    },
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 });
 exports.User = mongoose_1.default.model("User", userSchema);

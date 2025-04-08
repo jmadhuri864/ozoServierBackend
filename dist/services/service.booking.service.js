@@ -39,19 +39,11 @@ const getAllBookingService = (userId) => __awaiter(void 0, void 0, void 0, funct
             select: "setPrice pricePer itemPhoto -_id",
             populate: [
                 { path: "titleId", select: "name -_id" },
-<<<<<<< HEAD
-                { path: "categoryId", select: "name -_id" }
-            ]
-        })
-            .populate("userId", "firstName lastName -_id")
-            .select('-_id -__v');
-=======
                 { path: "categoryId", select: "name -_id" },
             ],
         })
             .populate("userId", "firstName lastName -_id")
             .select("-_id -__v");
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
         if (!bookings) {
             return false;
         }

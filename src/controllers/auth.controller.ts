@@ -6,19 +6,15 @@ import { validate } from "class-validator";
 //Todo : SignUp Controller
 export const signUp = async (req: Request, res: Response): Promise<any> => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "Profile photo is required" });
-  }
+  //   console.log(req.body)
+  //   if (!req.file) {
+  //     return res.status(400).json({ message: "Profile photo is required" });
+  // }
 
-    req.body.profilePhoto = req.file.path;
+  //  req.body.profilePhoto = req.file.path;
     const signUp = await registerUser(req.body);
-    if (signUp) {
-      return res.status(201).json({ message: "Registration successfully" });
-    } else {
-      return res
-        .status(400)
-        .json({ message: "User already exit please signin" });
-    }
+
+    return res.status(signUp.status).json({message:signUp.message})
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -27,17 +23,17 @@ export const signUp = async (req: Request, res: Response): Promise<any> => {
 //Todo : SignIn Controller
 export const signIn = async (req: Request, res: Response): Promise<any> => {
   try {
-    const logiData = req.body;
-    console.log(logiData);
+    const loginData = req.body;
+   // console.log(loginData);
 
-    const login = await signInService(logiData);
-    console.log(login);
+    const login = await signInService(loginData);
+    //console.log(login);
 
-    if (!login) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    // if (!login) {
+    //   return res.status(400).json({ message: "User not found" });
+    // }
 
-    return res.status(200).json(login);
+    return res.status(login.status).json({message:login.message,token:login.token});
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -47,10 +43,17 @@ export const signIn = async (req: Request, res: Response): Promise<any> => {
 export const logout = async (req: Request, res: Response): Promise<any> => {
   try {
       const token = req.headers.authorization?.split(" ")[1];
-      if (!token) return res.status(400).json({ message: "Token required" });
+      if (!token) 
+        {
+          return res.status(400).json({ message: "Token required" });
+        }
 
       const result = await logoutService(token);
-      if (!result.success) return res.status(400).json({ message: result.message });
+
+      if (!result.success)
+        {
+          return res.status(400).json({ message: result.message });
+        } 
 
       return res.json({ message: "Logged out successfully" });
   } catch (error) {

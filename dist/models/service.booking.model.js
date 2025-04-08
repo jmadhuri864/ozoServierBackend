@@ -8,32 +8,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const bookingSchema = new mongoose_1.default.Schema({
     userId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-<<<<<<< HEAD
-        ref: 'User',
-        required: true
-    },
-    serviceId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Service',
-        required: true
-    },
-    time: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true
-    },
-    status: {
-        type: String,
-        enum: ['Pending', 'Processing', 'Delivery'],
-        required: true,
-        default: 'Pending'
-    }
-});
-exports.Booking = mongoose_1.default.model('ServiceBooking', bookingSchema);
-=======
         ref: "User",
         required: true,
     },
@@ -57,9 +31,4 @@ exports.Booking = mongoose_1.default.model('ServiceBooking', bookingSchema);
         default: "Pending",
     },
 });
-<<<<<<< HEAD
 exports.Booking = mongoose_1.default.model('ServiceBooking', bookingSchema);
-=======
-exports.Booking = mongoose_1.default.model("ServiceBooking", bookingSchema);
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352

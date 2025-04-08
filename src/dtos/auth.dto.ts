@@ -36,8 +36,14 @@ export class SignUpDto {
   @IsNotEmpty()
   password!: string;
 
+  
+  // @Transform(({ value }) => value === "true")
+  @Transform(({ value }) => {
+    if (value === true || value === 'true') return true;
+    if (value === false || value === 'false') return false;
+    return false; // default or throw an error if needed
+  })
   @IsBoolean()
-  @Transform(({ value }) => value === "true")
   termsCondition!: boolean;
 }
 

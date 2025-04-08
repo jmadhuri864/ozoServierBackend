@@ -9,20 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
 exports.getSaleService = exports.getUpdatedSale = exports.deleteSale = exports.getAllSale = exports.postSale = void 0;
-=======
-<<<<<<< HEAD
-exports.getAllSale = exports.postSale = void 0;
-const sale_category_model_1 = require("../models/sale.category.model");
-const sale_model_1 = require("./../models/sale.model");
-=======
-exports.getSaleService = exports.getUpdatedSale = exports.getAllSale = exports.postSale = void 0;
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 const sale_category_model_1 = require("../models/sale.category.model");
 const sale_model_1 = require("./../models/sale.model");
 const sale_title_model_1 = require("../models/sale.title.model");
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 const postSale = (saleInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const saleExistWithUser = yield sale_model_1.saleModel.find({ u_id: saleInfo.u_id });
     const filterByCategory = saleExistWithUser.filter((ele) => String(ele.c_id) === saleInfo.c_id);
@@ -61,7 +51,6 @@ const getAllSale = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllSale = getAllSale;
-<<<<<<< HEAD
 //Todo : Delete Sale
 const deleteSale = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -72,10 +61,6 @@ const deleteSale = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.deleteSale = deleteSale;
-=======
-<<<<<<< HEAD
-=======
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
 const getUpdatedSale = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updatedSale = yield sale_model_1.saleModel.findByIdAndUpdate(id, data);
@@ -111,4 +96,3 @@ const getSaleService = (title) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getSaleService = getSaleService;
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8

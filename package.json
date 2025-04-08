@@ -16,23 +16,15 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-<<<<<<< HEAD
-    "inversify": "^7.3.0",
-=======
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
     "ioredis": "^5.6.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.1",
     "multer": "^1.4.5-lts.2",
-<<<<<<< HEAD
-    "nodemailer": "^6.10.0",
-    "reflect-metadata": "^0.2.2"
-=======
     "nodemailer": "^6.10.0"
->>>>>>> b83403378b623a4769b06cc45b8a9b9ed2439352
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/mongoose": "^5.11.97",

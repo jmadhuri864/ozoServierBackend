@@ -20,15 +20,11 @@ const insertReview = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (reviewIn) {
             return res.status(201).json({ message: "Review added successfully" });
         }
-<<<<<<< HEAD
-        return res.status(404).json({ message: "Sorry! You are not allowed to review this service since you haven't bought it on Ozoservier." });
-=======
         return res
             .status(404)
             .json({
             message: "Sorry! You are not allowed to review this service since you haven't bought it on Ozoservier.",
         });
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     }
     catch (error) {
         return res.status(500).json({ message: "Internal server error" });
@@ -42,13 +38,9 @@ const reviewController = (req, res) => __awaiter(void 0, void 0, void 0, functio
         //    const{serviceID} = req.params;
         const result = yield (0, service_review_service_1.getReview)(req.params);
         if (!result) {
-<<<<<<< HEAD
-            return res.status(404).json({ message: "Not at any review for thid service" });
-=======
             return res
                 .status(404)
                 .json({ message: "Not at any review for thid service" });
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
         }
         return res.status(200).json(result);
     }

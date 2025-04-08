@@ -15,19 +15,11 @@ class CreateCategoryDto {
 }
 exports.CreateCategoryDto = CreateCategoryDto;
 __decorate([
-<<<<<<< HEAD
-    (0, class_validator_1.IsString)({ message: 'category should be string' }),
-    __metadata("design:type", String)
-], CreateCategoryDto.prototype, "cName", void 0);
-__decorate([
-    (0, class_validator_1.IsString)({ message: 'Title ID should be a valid MongoDB ObjectId string' })
-=======
     (0, class_validator_1.IsString)({ message: "category should be string" }),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "cName", void 0);
 __decorate([
     (0, class_validator_1.IsString)({ message: "Title ID should be a valid MongoDB ObjectId string" })
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     // @Matches(/^[0-9a-fA-F]{24}$/, { message: "Invalid ObjectId format" })
     ,
     (0, class_validator_1.IsMongoId)(),

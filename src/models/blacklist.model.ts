@@ -12,4 +12,4 @@ const BlacklistSchema = new Schema<IBlacklist>({
 });
 
 export const Blacklist = mongoose.model<IBlacklist>("Blacklist", BlacklistSchema);
-//export default mongoose.model<IBlacklist>("Blacklist", BlacklistSchema);
+
