@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { updateUserService } from "../services/user.service";
 import { AuthRequest } from "../middlewares/auth.middleware";
+
+//todo:Update User
 export const updateUser = async (req: AuthRequest, res: Response) => {
   try {
     const id = req.user.userId;

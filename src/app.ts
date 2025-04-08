@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import authRoute from "./routes/auth.route";
 import { saleTitleRoute } from "./routes/sale.title.route";
 import saleCategoryRoute from "./routes/sale.category.route";
 import saleRouter from "./routes/sale.route";
@@ -12,11 +11,15 @@ import serviceCategoryRoute from "./routes/service.category.route";
 import serviceReviewRoute from "./routes/service.review.route";
 import serviceRoute from "./routes/service.route";
 import serviceTitleRoute from "./routes/service.title.route";
+import authRoute from "./routes/auth.route";
+import cors from 'cors';
+
 
 dotenv.config();
 const app = express();
-
+app.use(cors());
 app.use(express.json());
+
 
 const URI = process.env.MONGO_URL as string;
 const PORT = process.env.PORT || 1000;
@@ -32,9 +35,9 @@ mongoose
 
 
 
-  // app.use("/", (req, res) => {
-  //   res.status(200).send("Hello from ShriCoder07");
-  // })
+  app.use("/j", (req, res) => {
+    res.status(200).send("Hello from Vaishali Developer");
+  })
 
   app.use("/api/auth", authRoute);
   app.use("/api/service/title", serviceTitleRoute);
@@ -48,3 +51,5 @@ app.use("/api/sale/category", saleCategoryRoute);
 app.use("/api/sale", saleRouter);
 app.use("/api/sale/booking", saleBookingRouter);
 app.use("/api/sale/review", saleReviewRouter);
+
+

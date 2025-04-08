@@ -1,6 +1,6 @@
 import { authMiddleware } from './../middlewares/auth.middleware';
 import { createCategory } from '../controllers/sale.category.controller';
-import express from 'express'
+import express,{ Request,Response} from 'express'
 import { CreateCategoryDto } from '../dtos/sale.category.dto';
 import { validateDto } from '../middlewares/validateDto.middleware';
 

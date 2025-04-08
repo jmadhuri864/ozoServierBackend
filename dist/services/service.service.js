@@ -9,16 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
-exports.getAllService = exports.updateService = exports.createService = void 0;
+exports.searchService = exports.deleteService = exports.getAllService = exports.updateService = exports.createService = void 0;
 const service_category_model_1 = require("../models/service.category.model");
 const service_model_1 = require("../models/service.model");
-=======
-exports.getServiceService = exports.getAllService = exports.updateService = exports.createService = void 0;
-const service_category_model_1 = require("../models/service.category.model");
-const service_model_1 = require("../models/service.model");
-const sale_title_model_1 = require("../models/sale.title.model");
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
 //Todo : Post Service
 const createService = (data, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,16 +24,7 @@ const createService = (data, userId) => __awaiter(void 0, void 0, void 0, functi
             }
             const categoryID = categoryExit._id;
             const titleID = categoryExit.title;
-            const newService = new service_model_1.Service({
-                userId: userId,
-                titleId: titleID,
-                categoryId: categoryID,
-                setPrice: data.setPrice,
-                pricePer: data.pricePer,
-                availability: data.availability,
-                itemPhoto: data.itemPhoto,
-                address: data.address,
-            });
+            const newService = new service_model_1.Service(Object.assign(Object.assign({}, data), { userId: userId, categoryId: categoryID, titleId: titleID }));
             const saveService = yield newService.save();
             // console.log("New service saved:", saveService);
             return true;
@@ -75,44 +59,44 @@ const updateService = (data, serviceID) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.updateService = updateService;
 //Todo : Get All Service
-const getAllService = () => __awaiter(void 0, void 0, void 0, function* () {
+const getAllService = (paramsQuery) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { page, limit } = paramsQuery;
+        //  console.log(limit);
+        const pageData = Number(page) || 1;
+        const limitdata = Number(limit) || 2;
+        const skip = (pageData - 1) * limitdata;
+        //  console.log(`${pageData} ${limitdata}`);
         const services = yield service_model_1.Service.find()
-            .populate("userId", "firstName lastName emailAddress")
-            .populate("titleId", "name")
-            .populate("categoryId", "name");
-        return {
-            success: true,
-            message: "Services fetched successfully",
-            data: services,
-        };
+            .skip(skip)
+            .limit(limitdata)
+            .populate("categoryId", "name -_id")
+            .populate("titleId", "name -_id")
+            .populate("userId", "lastName firstName emailAddress -_id");
+        //  console.log(services);
+        return { services, dataLength: services.length };
     }
     catch (error) {
         return { success: false, message: "Internal Server Error" };
     }
 });
 exports.getAllService = getAllService;
-<<<<<<< HEAD
-=======
-const getServiceService = (title) => __awaiter(void 0, void 0, void 0, function* () {
+//Todo : Delete Service
+const deleteService = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const getTitle = yield sale_title_model_1.titleModel.findOne({
-            tName: { $regex: title.trim(), $options: "i" },
-        });
-        console.log(getTitle);
-        if (!getTitle) {
-            return { status: 404, message: "sale not exist" };
-        }
-        const titleId = getTitle === null || getTitle === void 0 ? void 0 : getTitle._id;
-        const getSales = yield service_model_1.Service.find({ t_id: titleId });
-        if (getSales.length == 0) {
-            return { status: 404, message: "sale not exist" };
-        }
-        return { status: 200, message: "success", data: getSales };
+        return yield service_model_1.Service.findByIdAndDelete({ _id: data });
     }
     catch (error) {
-        return { status: 500, message: "Internal Server Error" };
+        return { status: 500, message: "Internal server error" };
     }
 });
-exports.getServiceService = getServiceService;
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+exports.deleteService = deleteService;
+//Todo : Search Service
+const searchService = (key) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield service_model_1.Service.find({ titleId: key });
+    }
+    catch (error) {
+    }
+});
+exports.searchService = searchService;

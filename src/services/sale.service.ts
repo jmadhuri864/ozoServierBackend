@@ -6,7 +6,8 @@ import { CreateSaleDto } from "../dtos/sale.dto";
 import { titleModel } from '../models/sale.title.model';
 import { UpdateSaleDto } from '../dtos/sale.update.dto';
 
-export const postSale = async (saleInfo: CreateSaleDto) => {
+export const 
+postSale = async (saleInfo: CreateSaleDto) => {
   const saleExistWithUser = await saleModel.find({ u_id: saleInfo.u_id });
   const filterByCategory = saleExistWithUser.filter(
     (ele) => String(ele.c_id) === saleInfo.c_id
@@ -18,6 +19,7 @@ export const postSale = async (saleInfo: CreateSaleDto) => {
   if (existCategory) {
     const categoryId = existCategory._id;
     const titleId = existCategory.t_id;
+    
     const newSale = new saleModel({
       u_id: saleInfo.u_id,
       c_id: categoryId,

@@ -45,12 +45,6 @@ __decorate([
     __metadata("design:type", String)
 ], ServiceDto.prototype, "availability", void 0);
 __decorate([
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ArrayMinSize)(1, { message: "At least one item photo is required" }),
-    (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", Array)
-], ServiceDto.prototype, "itemPhoto", void 0);
-__decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)

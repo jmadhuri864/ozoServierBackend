@@ -9,3 +9,6 @@ export interface IUser {
     otp ?: string | null;
     otpExpires ?: Date | null;
 }
+
+
+

@@ -10,4 +10,4 @@ const user_dto_1 = require("../dtos/user.dto");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
 const user_controller_1 = require("../controllers/user.controller");
 exports.userRuote = express_1.default.Router();
-exports.userRuote.patch("/userupdate", (0, validateDto_middleware_1.validateDto)(user_dto_1.UserDto), auth_middleware_1.authenticateUser, user_controller_1.updateUser);
+exports.userRuote.patch("/userupdate", (0, validateDto_middleware_1.validateDto)(user_dto_1.UserDto), auth_middleware_1.authMiddleware, user_controller_1.updateUser);

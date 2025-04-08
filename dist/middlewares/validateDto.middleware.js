@@ -13,17 +13,13 @@ exports.validateDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const validateDto = (validateDto) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const logiData = (0, class_transformer_1.plainToInstance)(validateDto, req.body);
-    const errors = yield (0, class_validator_1.validate)(logiData);
-    //  console.log(errors);
+    const rawData = (0, class_transformer_1.plainToInstance)(validateDto, req.body);
+    const errors = yield (0, class_validator_1.validate)(rawData);
+    console.log(errors);
     if (errors.length > 0) {
         return res.status(400).json({ message: "Validation failed" });
     }
-<<<<<<< HEAD
-=======
-    //  console.log(logiData);
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
-    req.body = logiData;
+    req.body = rawData;
     next();
 });
 exports.validateDto = validateDto;

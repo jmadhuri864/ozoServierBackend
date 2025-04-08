@@ -92,5 +92,16 @@ export const deleteService = async(data: string) => {
   } catch (error) {
     return { status: 500, message: "Internal server error" };
   }
-};
+}
 
+//Todo : Search Service
+
+export const searchService = async (key : string) => {
+  try {
+    
+    return await Service.find({titleId : key})
+
+  } catch (error) {
+    
+  }
+}

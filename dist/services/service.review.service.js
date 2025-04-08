@@ -46,16 +46,6 @@ const getReview = (data) => __awaiter(void 0, void 0, void 0, function* () {
         const getReview = yield service_review_model_1.Review.find({ serviceId: serviceid })
             .populate({
             path: "serviceId",
-<<<<<<< HEAD
-            // select : "setPrice pricePer itemPhoto -_id", 
-            populate: [
-                { path: "titleId", select: "name -_id" },
-                { path: "categoryId", select: "name -_id" }
-            ]
-        })
-            .populate("userId", "firstName lastName -_id")
-            .select('-_id -__v');
-=======
             // select : "setPrice pricePer itemPhoto -_id",
             populate: [
                 { path: "titleId", select: "name -_id" },
@@ -64,7 +54,6 @@ const getReview = (data) => __awaiter(void 0, void 0, void 0, function* () {
         })
             .populate("userId", "firstName lastName -_id")
             .select("-_id -__v");
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
         //  console.log(getReview)
         if (!getReview) {
             return false;

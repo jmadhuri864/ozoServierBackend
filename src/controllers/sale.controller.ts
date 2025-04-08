@@ -5,7 +5,12 @@ import { AuthRequest } from "../middlewares/auth.middleware";
 export const createSale = async (req: Request, res: Response): Promise<any> => {
   try {
     const saleInfo: CreateSaleDto = req.body;
-    const sale: any = await postSale(saleInfo);
+      if (!req.file) {
+          return res.status(400).json({ message: "item image is  is required" });
+      }
+    
+        req.body = req.file.path;
+    const sale: any = await postSale( req.body);
     console.log(sale);
     return res.status(sale.status).json(sale.message);
   } catch (error) {

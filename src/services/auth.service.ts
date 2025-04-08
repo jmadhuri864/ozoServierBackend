@@ -11,24 +11,28 @@ dotenv.config();
 //Todo : Service for Register
 export const registerUser = async (data: SignUpDto) => {
   try {
-    const userExit = await User.findOne({ emailAddress : data.emailAddress });
+    if (data.termsCondition == false) {
+      return {
+        status: 400,
+        message: "please set terms and condition field as true",
+      };
+    }
+    const userExit = await User.findOne({ emailAddress: data.emailAddress });
     if (userExit) {
-      return false;
+      return { status: 404, message: "user already exist" };
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const newUser = new User({
       ...data,
-        password: hashedPassword,
+      password: hashedPassword,
     });
 
     await sendWelcomeEmail(newUser.emailAddress, newUser.firstName);
 
-    //return res.status(201).json({ message: "User registered successfully", user });
-
     const saveUser = await newUser.save();
-    return true;
+    return { status: 201, message: "register successfully" };
   } catch (error) {
-    return { message: "Faild to create user" };
+    return { status: 500, message: "Failed to create user" };
   }
 };
 
@@ -42,15 +46,14 @@ export const signInService = async (data: LoginDto) => {
     const userExists = await User.findOne({ emailAddress: data.emailAddress });
 
     console.log(userExists);
-    
 
     if (!userExists) {
-      return { success: false, message: "User not found" };
+      return { message: "User not found", status: 400 };
     }
 
     const isMatch = await bcrypt.compare(data.password, userExists.password);
     if (!isMatch) {
-      return { success: false, message: "Invalid password" };
+      return { message: "Invalid password", status: 400 };
     }
 
     console.log(JWT_SECRET);
@@ -58,9 +61,9 @@ export const signInService = async (data: LoginDto) => {
       expiresIn: "1h",
     });
 
-    return { success: true, message: "Login successful", token };
+    return { message: "Login successful", status: 200, token: token };
   } catch (error) {
-    return { success: false, message: "Failed to login" };
+    return { message: "Failed to login", status: 500 };
   }
 };
 

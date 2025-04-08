@@ -8,11 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const userSchema = new mongoose_1.default.Schema({
     profilePhoto: {
         type: String,
-<<<<<<< HEAD
-        required: true
-=======
-        required: true,
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+        required: /* true*/ false
     },
     lastName: {
         type: String,
@@ -23,21 +19,12 @@ const userSchema = new mongoose_1.default.Schema({
         required: true
     },
     phoneNumber: {
-<<<<<<< HEAD
         type: String,
         required: true
     },
     emailAddress: {
         type: String,
         required: true
-=======
-        type: String,
-        required: true,
-    },
-    emailAddress: {
-        type: String,
-        required: true,
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
     },
     password: {
         type: String,
@@ -45,12 +32,15 @@ const userSchema = new mongoose_1.default.Schema({
     },
     termsCondition: {
         type: Boolean,
-<<<<<<< HEAD
         required: true
-    }
-=======
-        required: true,
     },
->>>>>>> e260e265d5e07f3cb406760e0317df0d8a3e88c8
+    otp: {
+        type: String,
+        default: null
+    },
+    otpExpires: {
+        type: Date,
+        default: null
+    }
 });
 exports.User = mongoose_1.default.model("User", userSchema);
